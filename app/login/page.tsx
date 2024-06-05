@@ -86,6 +86,7 @@ export default function Login() {
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full">
         <p className="text-3xl font-bold">Login</p>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          {/* Replace custom component with some package */}
           <TextInput
             title="Email"
             type={"text"}
