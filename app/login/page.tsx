@@ -62,6 +62,7 @@ export default function Login() {
     if (response && response["token"]) {
       cookies.set("token", response["token"]);
       NotificationManager.success("Logged in successfully", "Success");
+      router.push("/");
     } else {
       NotificationManager.error(
         COMMON_ERROR_NOTIFICATION_MESSAGE,
