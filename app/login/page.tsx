@@ -10,7 +10,7 @@ import Link from "next/link";
 // import { cookies } from "next/headers";
 import { useCookies } from "next-client-cookies";
 import { request } from "@/app/api/fetch";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 
@@ -31,6 +31,7 @@ export default function Login() {
   const [errors, setErrors] = useState(initialErrors);
 
   const cookies = useCookies();
+  const router = useRouter();
 
   // const validateData = (data: loginData) => {
   //   let valid = true;
@@ -72,9 +73,9 @@ export default function Login() {
   // navigate to home page is token already present
   useEffect(() => {
     if (cookies.get("token")) {
-      redirect("/");
+      router.push("/");
     }
-  }, [cookies]);
+  }, [cookies, router]);
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
