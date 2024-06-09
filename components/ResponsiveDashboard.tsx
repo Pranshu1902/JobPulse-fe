@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useCookies } from "next-client-cookies";
 import Breadcrumbs from "@components/Breadcrumbs";
 import DashBoard from "@components/DashBoard";
+import LandingPage from "@components/LandingPage";
 
 export default function ResponsiveDashboard({
   children,
@@ -12,6 +14,7 @@ export default function ResponsiveDashboard({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const cookies = useCookies();
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
@@ -19,6 +22,8 @@ export default function ResponsiveDashboard({
 
   if (pathname == "/login" || pathname == "/signup") {
     return <>{children}</>;
+  } else if (pathname == "/" && !cookies.get("token")) {
+    return <LandingPage />;
   }
 
   return (
