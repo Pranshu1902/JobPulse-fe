@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Breadcrumbs from "@components/Breadcrumbs";
 import DashBoard from "@components/DashBoard";
 
@@ -10,10 +11,15 @@ export default function ResponsiveDashboard({
   children: React.ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
   };
+
+  if (pathname == "/login" || pathname == "/signup") {
+    return <>{children}</>;
+  }
 
   return (
     <div className="flex flex-col md:flex-row">
