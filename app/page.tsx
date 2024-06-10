@@ -20,7 +20,7 @@ export default function Home() {
     <div className="p-4">
       <div className="flex justify-between items-center">
       <p className="text-2xl">Welcome, Pranshu</p>
-      <button className="p-2 rounded-lg border border-purple-500">Add New Job</button>
+      <button className="p-2 rounded-lg border border-primary">Add New Job</button>
       </div>
       <div className="flex justify-around gap-2 items-center mt-6">
         <div className="flex flex-col gap-2 p-2 rounded-lg bg-purple-100 w-full">
