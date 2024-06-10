@@ -4,7 +4,11 @@ import { usePathname } from "next/navigation";
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faList, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faUser,
+  faUserGraduate,
+} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Logo from "@components/Logo";
 
@@ -19,7 +23,7 @@ export default function DashBoard() {
 
   const tabs = [
     { name: "Home", route: "/", icon: faHome },
-    { name: "List", route: "/list", icon: faList },
+    { name: "Jobs", route: "/jobs", icon: faUserGraduate },
     { name: "Profile", route: "/profile", icon: faUser },
   ];
 
@@ -39,8 +43,8 @@ export default function DashBoard() {
               key={i}
               href={tab.route}
               className={`${
-                pathname === tab.route && "bg-purple-500"
-              } p-4 rounded-lg text-xl hover:bg-purple-500 w-full flex items-center gap-2`}
+                pathname === tab.route && "bg-secondary"
+              } p-4 rounded-lg text-xl hover:bg-secondary w-full flex items-center gap-2`}
             >
               <FontAwesomeIcon icon={tab.icon} />
               <p>{tab.name}</p>
