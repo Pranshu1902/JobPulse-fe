@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faList, faUser } from "@fortawesome/free-solid-svg-icons";
-import logo from "@assets/logo.png";
 import Link from "next/link";
+import Logo from "@components/Logo";
 
 export default function DashBoard() {
   const cookies = useCookies();
@@ -32,7 +31,7 @@ export default function DashBoard() {
   return (
     <div className="bg-green-400 p-2 h-full flex flex-col justify-between">
       <div>
-        <Image src={logo} alt="logo" className="w-1/2" />
+        <Logo />
 
         <div className="flex flex-col gap-4 mt-6">
           {tabs.map((tab, i) => (
