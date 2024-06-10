@@ -29,7 +29,7 @@ export default function DashBoard() {
   };
 
   return (
-    <div className="bg-green-400 p-2 h-full flex flex-col justify-between">
+    <div className="bg-primary text-white p-2 h-full flex flex-col justify-between">
       <div>
         <Logo />
 
@@ -39,8 +39,8 @@ export default function DashBoard() {
               key={i}
               href={tab.route}
               className={`${
-                pathname === tab.route && "bg-green-500"
-              } p-4 rounded-lg text-xl hover:bg-green-500 w-full flex items-center gap-2`}
+                pathname === tab.route && "bg-purple-500"
+              } p-4 rounded-lg text-xl hover:bg-purple-500 w-full flex items-center gap-2`}
             >
               <FontAwesomeIcon icon={tab.icon} />
               <p>{tab.name}</p>

@@ -8,10 +8,10 @@ export default function Breadcrumbs({
   onMenuClick: () => void;
 }) {
   return (
-    <div className="fixed top-0 left-0 w-full bg-green-400 p-2 flex items-center justify-between md:hidden z-10">
+    <div className="fixed top-0 left-0 w-full bg-primary p-2 flex items-center justify-between md:hidden z-10">
       <Logo width={40} />
       <button onClick={onMenuClick} className="p-2">
-        <FontAwesomeIcon icon={faBars} />
+        <FontAwesomeIcon icon={faBars} className="text-white" />
       </button>
     </div>
   );
