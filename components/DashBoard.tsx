@@ -22,10 +22,25 @@ export default function DashBoard() {
   }
 
   const tabs = [
-    { name: "Home", route: "/", icon: faHome },
-    { name: "Jobs", route: "/jobs", icon: faUserGraduate },
-    { name: "Profile", route: "/profile", icon: faUser },
+    { name: "Home", route: "/", icon: faHome, tabIndex: 0 },
+    { name: "Jobs", route: "/jobs", icon: faUserGraduate, tabIndex: 1 },
+    { name: "Profile", route: "/profile", icon: faUser, tabIndex: 2 },
   ];
+
+  const getActiveTab = (pathname: string): number => {
+    const routes = ["/", "/jobs", "/profile"];
+    let index = 0;
+
+    routes.forEach((route: string, i: number) => {
+      if (pathname.startsWith(route)) {
+        index = i;
+      }
+    });
+
+    return index;
+  };
+
+  const activeTab = getActiveTab(pathname);
 
   const logout = () => {
     cookies.remove("token");
@@ -43,7 +58,7 @@ export default function DashBoard() {
               key={i}
               href={tab.route}
               className={`${
-                pathname === tab.route && "bg-secondary"
+                activeTab === tab.tabIndex && "bg-secondary"
               } p-4 rounded-lg text-xl hover:bg-secondary w-full flex items-center gap-2`}
             >
               <FontAwesomeIcon icon={tab.icon} />

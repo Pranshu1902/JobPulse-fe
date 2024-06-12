@@ -5,6 +5,7 @@ import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
 import { useEffect, useState } from "react";
 import { Job, JobStatus } from "@models/types";
+import Link from "next/link";
 
 export default function Jobs() {
   const cookies = useCookies();
@@ -47,8 +48,9 @@ export default function Jobs() {
 
   return (
     <div className="p-4">
-      <div>
+      <div className="flex justify-between items-center mb-4">
         <p className="text-2xl">List Jobs</p>
+        <Link href={"/jobs/new"} className="border border-primary p-2 rounded-lg px-6">+ New</Link>
       </div>
       <div className="flex overflow-scroll gap-4">
         {JOB_STATUSES.map((job_status: JobStatus) =>
