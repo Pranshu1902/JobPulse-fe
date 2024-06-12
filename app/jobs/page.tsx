@@ -29,10 +29,12 @@ export default function Jobs() {
   const showJobCard = (job: any) => {
     return (
       <div className="bg-secondary p-3 rounded-lg">
-        <b className="text-xl">{job.role}</b>
-        <p>{job.company.name}</p>
-        <p>{job.contract_length}</p>
-        <p>Salary: {job.salary}</p>
+        <Link href={`/jobs/${job.id}`}>
+          <b className="text-xl">{job.role}</b>
+          <p>{job.company.name}</p>
+          <p>{job.contract_length}</p>
+          <p>Salary: {job.salary}</p>
+        </Link>
       </div>
     );
   };
@@ -50,7 +52,12 @@ export default function Jobs() {
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <p className="text-2xl">List Jobs</p>
-        <Link href={"/jobs/new"} className="border border-primary p-2 rounded-lg px-6">+ New</Link>
+        <Link
+          href={"/jobs/new"}
+          className="border border-primary p-2 rounded-lg px-6"
+        >
+          + New
+        </Link>
       </div>
       <div className="flex overflow-scroll gap-4">
         {JOB_STATUSES.map((job_status: JobStatus) =>
