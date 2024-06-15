@@ -24,6 +24,8 @@ export default function NewJob() {
         <input className="border border-primary" type="text" name="" id="" />
         <p>Platform:</p>
         <input className="border border-primary" type="text" name="" id="" />
+        <p>Contract Length:</p>
+        <input className="border border-primary" type="text" name="" id="" />
       </form>
     </div>
   );
