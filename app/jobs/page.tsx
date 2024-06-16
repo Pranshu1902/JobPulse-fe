@@ -15,6 +15,10 @@ export default function Jobs() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const showBoardColumn = (status: JobStatus) => {
+    const filteredJobs = jobList.filter(
+      (job: Job) => job.status.status === status
+    );
+
     return (
       <div
         key={status}
@@ -24,10 +28,13 @@ export default function Jobs() {
           <p className="font-semibold text-2xl mb-4">{status}</p>
         </div>
         <div className="flex flex-col gap-6 overflow-y-auto pb-3">
-          {jobList
-            .filter((job: Job) => job.status.status === status)
-            .map((job: Job) => showJobCard(job))}
+          {filteredJobs.map((job: Job) => showJobCard(job))}
         </div>
+        {filteredJobs.length === 0 && (
+          <div className="flex justify-center p-2 bg-secondary rounded-lg">
+            No Jobs found
+          </div>
+        )}
       </div>
     );
   };
