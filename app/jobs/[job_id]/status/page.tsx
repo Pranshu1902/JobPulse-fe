@@ -1,7 +1,7 @@
 "use client";
 
 import { request } from "@api/fetch";
-import { JOB_STATUSES } from "@constants/constants";
+import { COMMON_ERROR_NOTIFICATION_MESSAGE, JOB_STATUSES } from "@constants/constants";
 import Dropdown from "@components/Dropdown";
 import { Job, JobStatus } from "@/models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ export default function UpdateJobStatus() {
   const cookies = useCookies();
   const jobId = params.job_id;
   const [jobDetails, setJobDetails] = useState<Job>();
-  const [status, setStatus] = useState<JobStatus>();
+  const [status, setStatus] = useState<JobStatus>("Applied");
   const [updateText, setUpdateText] = useState("");
 
   const fetchData = async () => {
@@ -50,7 +50,7 @@ export default function UpdateJobStatus() {
       NotificationManager.success("Status updated successfully", "Success");
       router.push(`/jobs/${jobId}`);
     } else {
-      NotificationManager.success("Logged in successfully", "Success");
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
   };
 
