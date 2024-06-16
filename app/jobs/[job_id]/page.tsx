@@ -1,13 +1,14 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
-import { Job, StatusUpdate } from "@models/types";
+import { Job, StatusUpdate } from "@/models/models";
+import Modal from "@components/Modal";
+import { DialogTitle } from "@headlessui/react";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -21,6 +22,10 @@ export default function JobDetail() {
     setShowStatusHistory(true);
   };
 
+  const updateJobStatus = () => {
+    router.push(`/jobs/${jobId}/status`);
+  };
+
   const showStatusObject = (status: StatusUpdate) => {
     return (
       <div>
@@ -28,13 +33,10 @@ export default function JobDetail() {
           Status: <b>{status.status}</b>
         </p>
         <p>{status.update_text}</p>
+        <p className="text-sm">{status.date_posted}</p>
       </div>
     );
   };
-
-  if (!jobId) {
-    return <div>Loading...</div>;
-  }
 
   const fetchData = async () => {
     const response = await request(
@@ -50,6 +52,10 @@ export default function JobDetail() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (!jobId) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-4">
@@ -74,7 +80,10 @@ export default function JobDetail() {
           >
             View Status Updates
           </button>
-          <button className="p-2 px-8 rounded-lg bg-primary text-white font-bold">
+          <button
+            onClick={updateJobStatus}
+            className="p-2 px-8 rounded-lg bg-primary text-white font-bold"
+          >
             Update Status
           </button>
           <button className="p-2 px-8 rounded-lg bg-primary text-white font-bold">
@@ -85,12 +94,19 @@ export default function JobDetail() {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-2">
-        {showStatusHistory &&
-          jobDetails?.statuses.map((status: StatusUpdate) => (
+      <Modal open={showStatusHistory} setOpen={setShowStatusHistory}>
+        <div className="flex flex-col gap-2 p-6">
+          <DialogTitle
+            as="h1"
+            className="font-semibold leading-6 text-gray-900"
+          >
+            Status Update Track
+          </DialogTitle>
+          {jobDetails?.statuses.map((status: StatusUpdate) => (
             <div key={status.id}>{showStatusObject(status)}</div>
           ))}
-      </div>
+        </div>
+      </Modal>
     </div>
   );
 }
