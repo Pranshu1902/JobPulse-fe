@@ -9,6 +9,9 @@ import { useCookies } from "next-client-cookies";
 import { Job, StatusUpdate } from "@/models/models";
 import Modal from "@components/Modal";
 import { DialogTitle } from "@headlessui/react";
+import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
+import { NotificationManager } from "react-notifications";
+import ConfirmDelete from "@/components/modals/ConfirmDelete";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -17,13 +20,38 @@ export default function JobDetail() {
   const jobId = params.job_id;
   const [jobDetails, setJobDetails] = useState<Job>();
   const [showStatusHistory, setShowStatusHistory] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const displayStatusUpdatesRecord = () => {
     setShowStatusHistory(true);
   };
 
+  const displayDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const hideDeleteModal = () => {
+    setShowDeleteModal(false);
+  };
+
   const updateJobStatus = () => {
     router.push(`/jobs/${jobId}/status`);
+  };
+
+  const deleteJob = async () => {
+    const response = await request(
+      "DELETE",
+      {},
+      `/jobs/${jobId}`,
+      cookies.get("token")
+    );
+
+    if (response) {
+      NotificationManager.success("Job deleted successfully", "Success");
+      router.push("/jobs");
+    } else {
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    }
   };
 
   const showStatusObject = (status: StatusUpdate) => {
@@ -89,7 +117,10 @@ export default function JobDetail() {
           <button className="p-2 px-8 rounded-lg bg-primary text-white font-bold">
             Edit Job
           </button>
-          <button className="p-2 px-8 rounded-lg bg-red-500 text-white font-bold">
+          <button
+            onClick={displayDeleteModal}
+            className="p-2 px-8 rounded-lg bg-red-500 text-white font-bold"
+          >
             Delete Job
           </button>
         </div>
@@ -106,6 +137,13 @@ export default function JobDetail() {
             <div key={status.id}>{showStatusObject(status)}</div>
           ))}
         </div>
+      </Modal>
+      <Modal open={showDeleteModal} setOpen={setShowDeleteModal}>
+        <ConfirmDelete
+          title={"Job"}
+          onSubmit={deleteJob}
+          onCancel={hideDeleteModal}
+        />
       </Modal>
     </div>
   );
