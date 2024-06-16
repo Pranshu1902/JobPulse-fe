@@ -10,6 +10,7 @@ import { useCookies } from "next-client-cookies";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
+import { NotificationManager } from "react-notifications";
 import Button from "@/components/Button";
 
 export default function UpdateJobStatus() {
@@ -22,6 +23,21 @@ export default function UpdateJobStatus() {
   const [updateText, setUpdateText] = useState("");
 
   const fetchData = async () => {
+    const response = await request(
+      "GET",
+      {},
+      `/jobs/${jobId}/`,
+      cookies.get("token")
+    );
+    setJobDetails(response);
+
+    // set the current value of status dropdown as current status of job
+    setStatus(response.status.status);
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
     const data = { status: status, update_text: updateText };
     const response = await request(
       "POST",
@@ -29,10 +45,13 @@ export default function UpdateJobStatus() {
       `/jobs/${jobId}/update_status/`,
       cookies.get("token")
     );
-    setJobDetails(response);
 
-    // set the current value of status dropdown as current status of job
-    setStatus(response.status.status);
+    if (response?.id) {
+      NotificationManager.success("Status updated successfully", "Success");
+      router.push(`/jobs/${jobId}`);
+    } else {
+      NotificationManager.success("Logged in successfully", "Success");
+    }
   };
 
   useEffect(() => {
@@ -56,7 +75,7 @@ export default function UpdateJobStatus() {
             {jobDetails?.role} - {jobDetails?.company?.name}
           </p>
         </div>
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <Dropdown
             name={"Status"}
             state={status}
@@ -68,8 +87,12 @@ export default function UpdateJobStatus() {
             id="outlined-basic"
             label="Update Text"
             variant="outlined"
+            value={updateText}
+            onChange={(e) => setUpdateText(e.target.value)}
           />
-          <Button type="primary" text={"Update"} onClick={() => {}}></Button>
+          <div className="flex justify-center">
+            <Button type="primary" text={"Update"} onClick={() => {}}></Button>
+          </div>
         </form>
       </div>
     </div>

@@ -17,6 +17,7 @@ export default function Button(props: ButtonProps) {
           : "border border-primary"
       } font-bold p-2 rounded-lg px-12 py-2 flex justify-center items-center`}
       onClick={props.onClick}
+      type="submit"
     >
       <FontAwesomeIcon icon={props?.icon} />
       {props.text}
