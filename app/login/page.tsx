@@ -64,10 +64,7 @@ export default function Login() {
       NotificationManager.success("Logged in successfully", "Success");
       router.push("/");
     } else {
-      NotificationManager.error(
-        COMMON_ERROR_NOTIFICATION_MESSAGE,
-        "Error"
-      );
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
   };
 
