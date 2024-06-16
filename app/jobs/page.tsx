@@ -4,7 +4,7 @@ import { JOB_STATUSES } from "@constants/constants";
 import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
 import { useEffect, useState } from "react";
-import { Job, JobStatus } from "@models/types";
+import { Job, JobStatus } from "@/models/models";
 import Link from "next/link";
 
 export default function Jobs() {
