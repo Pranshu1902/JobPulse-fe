@@ -29,3 +29,13 @@ export type Job = {
   status: StatusUpdate;
   statuses: StatusUpdate[];
 };
+
+export type JobCreateModel = {
+  role: string;
+  company: string;
+  application_date: string;
+  contract_length: string;
+  job_link: string;
+  platform: string;
+  salary: string;
+};
