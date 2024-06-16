@@ -14,6 +14,10 @@ export default function Button(props: ButtonProps) {
       className={`${
         props.type === "primary"
           ? "bg-primary text-white"
+          : props.type === "delete"
+          ? "bg-red-500 text-white"
+          : props.type === "cancel"
+          ? "bg-gray-200"
           : "border border-primary"
       } font-bold p-2 rounded-lg px-12 py-2 flex justify-center items-center`}
       onClick={props.onClick}

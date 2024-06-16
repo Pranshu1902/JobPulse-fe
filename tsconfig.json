@@ -23,7 +23,8 @@
       "@models/*": ["./models/*"],
       "@components/*": ["./components/*"],
       "@api/*": ["./app/api/*"],
-      "@constants/*": ["./app/constants/*"]
+      "@constants/*": ["./app/constants/*"],
+      "@modals/*": ["./components/modals/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
