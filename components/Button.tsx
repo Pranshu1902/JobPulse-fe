@@ -2,9 +2,9 @@ import { ButtonTypes } from "@models/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ButtonProps {
-  text: string;
-  onClick: (e: any) => void;
   type: ButtonTypes;
+  text: string;
+  onClick?: (e: any) => void;
   icon?: any;
 }
 
