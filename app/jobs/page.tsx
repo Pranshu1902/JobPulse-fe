@@ -63,14 +63,13 @@ export default function Jobs() {
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft -= 200; // Adjust scrolling distance as needed
+      scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollLeft += 200; // Adjust scrolling distance as needed
-    }
+      scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });    }
   };
 
   return (
