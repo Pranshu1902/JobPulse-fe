@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
-import { Job, StatusUpdate } from "@/models/models";
+import { Job } from "@/models/models";
 import Modal from "@components/Modal";
-import { DialogTitle } from "@headlessui/react";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
 import { NotificationManager } from "react-notifications";
 import ConfirmDelete from "@/components/modals/ConfirmDelete";
+import StatusTimeline from "@/components/Timeline";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -52,18 +52,6 @@ export default function JobDetail() {
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
-  };
-
-  const showStatusObject = (status: StatusUpdate) => {
-    return (
-      <div>
-        <p className="text-xl">
-          Status: <b>{status.status}</b>
-        </p>
-        <p>{status.update_text}</p>
-        <p className="text-sm">{status.date_posted}</p>
-      </div>
-    );
   };
 
   const fetchData = async () => {
@@ -127,15 +115,8 @@ export default function JobDetail() {
       </div>
       <Modal open={showStatusHistory} setOpen={setShowStatusHistory}>
         <div className="flex flex-col gap-2 p-6">
-          <DialogTitle
-            as="h1"
-            className="font-semibold leading-6 text-gray-900"
-          >
-            Status Update Track
-          </DialogTitle>
-          {jobDetails?.statuses.map((status: StatusUpdate) => (
-            <div key={status.id}>{showStatusObject(status)}</div>
-          ))}
+          <p className="text-2xl font-semibold">Status Update Track</p>
+          <StatusTimeline statuses={jobDetails?.statuses} />
         </div>
       </Modal>
       <Modal open={showDeleteModal} setOpen={setShowDeleteModal}>
