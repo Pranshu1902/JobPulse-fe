@@ -12,12 +12,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
-import { Job } from "@/models/models";
+import { Job, JobComment } from "@/models/models";
 import Modal from "@components/Modal";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
 import { NotificationManager } from "react-notifications";
 import ConfirmDelete from "@/components/modals/ConfirmDelete";
 import StatusTimeline from "@/components/Timeline";
+import { TextField } from "@mui/material";
+import Button from "@/components/Button";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -27,6 +29,7 @@ export default function JobDetail() {
   const [jobDetails, setJobDetails] = useState<Job>();
   const [showStatusHistory, setShowStatusHistory] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [newComment, setNewComment] = useState("");
 
   const displayStatusUpdatesRecord = () => {
     setShowStatusHistory(true);
@@ -44,6 +47,24 @@ export default function JobDetail() {
     router.push(`/jobs/${jobId}/status`);
   };
 
+  const addComment = async () => {
+    const data = { comment: newComment };
+    const response = await request(
+      "POST",
+      data,
+      `/jobs/${jobId}/comment/`,
+      cookies.get("token")
+    );
+
+    if (response?.id) {
+      NotificationManager.success("Comment posted successfully", "Success");
+      setNewComment("");
+      fetchData();
+    } else {
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    }
+  };
+
   const deleteJob = async () => {
     const response = await request(
       "DELETE",
@@ -58,6 +79,17 @@ export default function JobDetail() {
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
+  };
+
+  const showCommentBox = (comment: JobComment) => {
+    return (
+      <div key={comment.id} className="bg-lightgray p-3 rounded-lg relative">
+        <p>{comment.comment}</p>
+        <p className="text-sm absolute right-2 bottom-2">
+          {new Date(comment.date).toLocaleString()}
+        </p>
+      </div>
+    );
   };
 
   const fetchData = async () => {
@@ -143,7 +175,29 @@ export default function JobDetail() {
         </div>
       </div>
       <div>
-        <div className="text-3xl flex justify-center">Comments Section goes here</div>
+        <div className="text-2xl mt-4">Comments:</div>
+        <div className="flex items-center gap-4 mt-4">
+          <TextField
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            className="w-4/5"
+          />
+          <Button
+            onClick={addComment}
+            className="w-1/5"
+            type="primary"
+            text="Add"
+          ></Button>
+        </div>
+        <div className="flex flex-col gap-4 mt-6">
+          {jobDetails?.comments.length ?? 0 > 0 ? (
+            jobDetails?.comments.map((comment: JobComment) =>
+              showCommentBox(comment)
+            )
+          ) : (
+            <div className="bg-lightgray p-2 rounded-lg">No Comments Found</div>
+          )}
+        </div>
       </div>
       <Modal open={showStatusHistory} setOpen={setShowStatusHistory}>
         <div className="flex flex-col gap-2 p-6">

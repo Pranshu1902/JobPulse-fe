@@ -17,6 +17,13 @@ export type StatusUpdate = {
   date_posted: string;
 };
 
+export type JobComment = {
+  id: string;
+  job: string;
+  comment: string;
+  date: string;
+}
+
 export type Job = {
   id: string;
   role: string;
@@ -28,6 +35,7 @@ export type Job = {
   salary: string;
   status: StatusUpdate;
   statuses: StatusUpdate[];
+  comments: JobComment[];
 };
 
 export type JobCreateModel = {
