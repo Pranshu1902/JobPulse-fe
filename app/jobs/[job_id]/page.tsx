@@ -96,7 +96,7 @@ export default function JobDetail() {
         </div>
         <p>ID: {jobId}</p>
       </div>
-      <div className="bg-gray-100 rounded-lg p-4 flex justify-between">
+      <div className="bg-lightgray rounded-lg p-4 flex justify-between">
         <div>
           <p className="text-3xl font-bold">{jobDetails?.role}</p>
           <p className="text-xl">{jobDetails?.company.name}</p>

@@ -6,6 +6,7 @@ interface ButtonProps {
   text: string;
   onClick?: (e: any) => void;
   icon?: any;
+  className?: string;
 }
 
 export default function Button(props: ButtonProps) {
@@ -19,7 +20,7 @@ export default function Button(props: ButtonProps) {
           : props.type === "cancel"
           ? "bg-gray-200"
           : "border border-primary"
-      } font-bold p-2 rounded-lg px-12 py-2 flex justify-center items-center`}
+      } font-bold p-2 rounded-lg px-12 py-2 flex justify-center items-center w-full ${props?.className}`}
       onClick={props.onClick}
       type="submit"
     >
