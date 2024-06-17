@@ -1,7 +1,13 @@
 "use client";
 
 import { useRouter, useParams } from "next/navigation";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faClock,
+  faGlobe,
+  faMoneyBill,
+  faExternalLink,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
@@ -61,7 +67,6 @@ export default function JobDetail() {
       `/jobs/${jobId}`,
       cookies.get("token")
     );
-    console.log(response);
     setJobDetails(response);
   };
 
@@ -88,6 +93,30 @@ export default function JobDetail() {
         <div>
           <p className="text-3xl font-bold">{jobDetails?.role}</p>
           <p className="text-xl">{jobDetails?.company.name}</p>
+          <div className="flex flex-col gap-2 mt-4">
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faGlobe} />
+              <p className="text-xl">{jobDetails?.platform}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faMoneyBill} />
+              <p className="text-xl">{jobDetails?.salary}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <FontAwesomeIcon icon={faClock} />
+              <p className="text-xl">
+                {jobDetails?.application_date &&
+                  new Date(jobDetails.application_date).toLocaleString()}
+              </p>
+            </div>
+            <a
+              href={jobDetails?.job_link}
+              target="_blank"
+              className="hover:underline"
+            >
+              <FontAwesomeIcon icon={faExternalLink} /> Job Link
+            </a>
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <button
@@ -112,6 +141,9 @@ export default function JobDetail() {
             Delete Job
           </button>
         </div>
+      </div>
+      <div>
+        <div className="text-3xl flex justify-center">Comments Section goes here</div>
       </div>
       <Modal open={showStatusHistory} setOpen={setShowStatusHistory}>
         <div className="flex flex-col gap-2 p-6">
