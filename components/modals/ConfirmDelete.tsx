@@ -18,7 +18,7 @@ export default function ConfirmDelete(props: ConfirmDeleteProps) {
       <p>Are you sure you want to delete?</p>
       <div className="flex flex-col md:flex-row gap-2 justify-end mt-4">
         <Button type="cancel" text="Cancel" onClick={props.onCancel} />
-        <Button type="delete" text="Delete" onClick={props.onSubmit} />
+        <Button type="delete" buttonType="submit" text="Delete" onClick={props.onSubmit} />
       </div>
     </div>
   );

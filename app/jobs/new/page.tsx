@@ -115,7 +115,7 @@ export default function NewJob() {
           />
         </div>
         <div className="flex justify-center items-center">
-          <Button type={"primary"} text="Create Job"></Button>
+          <Button type={"primary"} buttonType="submit" text="Create Job"></Button>
         </div>
       </form>
     </div>

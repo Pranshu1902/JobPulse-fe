@@ -1,7 +1,10 @@
 "use client";
 
 import { request } from "@api/fetch";
-import { COMMON_ERROR_NOTIFICATION_MESSAGE, JOB_STATUSES } from "@constants/constants";
+import {
+  COMMON_ERROR_NOTIFICATION_MESSAGE,
+  JOB_STATUSES,
+} from "@constants/constants";
 import Dropdown from "@components/Dropdown";
 import { Job, JobStatus } from "@/models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -71,11 +74,11 @@ export default function UpdateJobStatus() {
       </div>
       <div>
         <div>
-          <p>
+          <p className="text-xl font-semibold">
             {jobDetails?.role} - {jobDetails?.company?.name}
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
           <Dropdown
             name={"Status"}
             state={status}
@@ -90,8 +93,14 @@ export default function UpdateJobStatus() {
             value={updateText}
             onChange={(e) => setUpdateText(e.target.value)}
           />
-          <div className="flex justify-center">
-            <Button type="primary" text={"Update"} onClick={() => {}}></Button>
+          <div className="flex justify-center gap-2">
+            <Button
+              type="cancel"
+              buttonType={"button"}
+              text={"Cancel"}
+              onClick={() => router.back()}
+            ></Button>
+            <Button type="primary" buttonType="submit" text={"Update"}></Button>
           </div>
         </form>
       </div>
