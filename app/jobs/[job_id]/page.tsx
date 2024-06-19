@@ -151,27 +151,22 @@ export default function JobDetail() {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <button
+          <Button
+            type="primary"
+            text="View Status Updates"
             onClick={displayStatusUpdatesRecord}
-            className="p-2 px-8 rounded-lg bg-primary text-white font-bold"
-          >
-            View Status Updates
-          </button>
-          <button
+          />
+          <Button
+            type="primary"
+            text="Update Status"
             onClick={updateJobStatus}
-            className="p-2 px-8 rounded-lg bg-primary text-white font-bold"
-          >
-            Update Status
-          </button>
-          <button className="p-2 px-8 rounded-lg bg-primary text-white font-bold">
-            Edit Job
-          </button>
-          <button
+          />
+          {/* <Button type="primary" text="Edit Job" onClick={editJob} /> */}
+          <Button
+            type="delete"
+            text="Delete Job"
             onClick={displayDeleteModal}
-            className="p-2 px-8 rounded-lg bg-red-500 text-white font-bold"
-          >
-            Delete Job
-          </button>
+          />
         </div>
       </div>
       <div>
@@ -195,7 +190,9 @@ export default function JobDetail() {
               showCommentBox(comment)
             )
           ) : (
-            <div className="bg-lightgray p-3 rounded-lg flex justify-center">No Comments Found</div>
+            <div className="bg-lightgray p-3 rounded-lg flex justify-center">
+              No Comments Found
+            </div>
           )}
         </div>
       </div>
