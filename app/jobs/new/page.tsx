@@ -55,7 +55,7 @@ export default function NewJob() {
           <p className="font-semibold text-2xl">Add New Job</p>
         </div>
       </div>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-12">
         <div className="grid grid-cols-2 gap-4">
           <TextField
             className="w-full"

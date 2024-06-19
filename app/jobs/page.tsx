@@ -27,7 +27,7 @@ export default function Jobs() {
     return (
       <div
         key={status}
-        className="p-4 shadow rounded-xl bg-lightgray min-w-[300px] w-[300px] flex flex-col max-h-[80vh]"
+        className="p-4 shadow rounded-xl bg-lightgray min-w-[300px] w-[300px] flex flex-col h-[85vh] max-h-[90vh]"
       >
         <div className="flex justify-between items-center mb-4">
           <p className="font-semibold text-2xl">{status}</p>
