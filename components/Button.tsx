@@ -21,7 +21,7 @@ export default function Button(props: ButtonProps) {
           : props.type === "cancel"
           ? "bg-gray-200"
           : "border border-primary"
-      } font-bold p-2 rounded-lg px-12 py-2 flex justify-center items-center w-full ${props?.className}`}
+      } font-bold p-2 rounded-lg px-12 py-2 flex justify-center items-center w-full gap-2 ${props?.className}`}
       onClick={props.onClick}
       type={props?.buttonType}
     >

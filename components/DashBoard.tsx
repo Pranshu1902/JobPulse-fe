@@ -24,8 +24,16 @@ export default function DashBoard({
   const cookies = useCookies();
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<User>({id: 0, username: "", email: "", first_name: "", last_name: ""});
+  const [user, setUser] = useState<User>({
+    id: 0,
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+  });
 
+  // create a custom hook to get this data in different components rather than making an API call again and again
+  // also update user on profile page doesn't update the user's name on dashboard unless reloaded
   const fetchUserData = async () => {
     const response = await request(
       "GET",
