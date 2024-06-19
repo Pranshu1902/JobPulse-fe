@@ -106,13 +106,13 @@ export default function JobDetail() {
     fetchData();
   }, []);
 
-  if (!jobId) {
+  if (!jobId || !jobDetails?.id) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="p-4">
-      <div className="mb-8 flex items-center gap-2">
+      <div className="mb-8 flex flex-col md:flex-row md:items-center gap-2">
         <div className="flex items-center gap-2 font-semibold text-2xl">
           <button onClick={() => router.back()}>
             <FontAwesomeIcon icon={faChevronLeft} />
@@ -121,7 +121,7 @@ export default function JobDetail() {
         </div>
         <p>ID: {jobId}</p>
       </div>
-      <div className="bg-lightgray rounded-lg p-4 flex justify-between">
+      <div className="bg-lightgray rounded-lg p-4 flex flex-col md:flex-row gap-6 justify-between">
         <div>
           <p className="text-3xl font-bold">{jobDetails?.role}</p>
           <p className="text-xl">{jobDetails?.company.name}</p>
@@ -176,15 +176,15 @@ export default function JobDetail() {
       </div>
       <div>
         <div className="text-2xl mt-4">Comments:</div>
-        <div className="flex items-center gap-4 mt-4">
+        <div className="flex flex-col md:flex-row items-center gap-4 mt-4">
           <TextField
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            className="w-4/5"
+            className="w-full md:w-4/5"
           />
           <Button
             onClick={addComment}
-            className="w-1/5"
+            className="w-full md:w-1/5"
             type="primary"
             text="Add"
           ></Button>
@@ -195,7 +195,7 @@ export default function JobDetail() {
               showCommentBox(comment)
             )
           ) : (
-            <div className="bg-lightgray p-2 rounded-lg">No Comments Found</div>
+            <div className="bg-lightgray p-3 rounded-lg flex justify-center">No Comments Found</div>
           )}
         </div>
       </div>

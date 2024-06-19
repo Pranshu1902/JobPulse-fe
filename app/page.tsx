@@ -75,7 +75,7 @@ export default function Home() {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
         <p className="text-2xl">Welcome, Pranshu</p>
         <Link href={"/jobs/new"}>
           <Button type="secondary" text="Add New Job" />
@@ -103,7 +103,7 @@ export default function Home() {
         </div>
       </div>
       <div className="mt-6">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {jobs?.map((job: Job) => showJobCard(job))}
         </div>
       </div>

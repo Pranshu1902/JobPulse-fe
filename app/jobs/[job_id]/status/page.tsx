@@ -63,7 +63,7 @@ export default function UpdateJobStatus() {
 
   return (
     <div className="p-4">
-      <div className="mb-8 flex items-center gap-2">
+      <div className="mb-8 flex flex-col md:flex-row md:items-center gap-2">
         <div className="flex items-center gap-2 font-semibold text-2xl">
           <button onClick={() => router.back()}>
             <FontAwesomeIcon icon={faChevronLeft} />
