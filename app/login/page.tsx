@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import logo from "@assets/logo.png";
+import logo from "@assets/logo_white.png";
 import { loginData } from "@models/types";
 import Link from "next/link";
 // import { cookies } from "next/headers";
@@ -75,7 +75,7 @@ export default function Login() {
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      <div className="md:w-1/2 flex flex-col justify-center items-center h-full bg-purple-400">
+      <div className="md:w-1/2 flex flex-col justify-center items-center h-full bg-primary">
         <Image src={logo} alt="logo" className="w-1/3"></Image>
         {/* <p className="font-bold text-5xl">JobPulse</p> */}
         {/* <p>Stay Ahead of the Game with JobPulse</p> */}
