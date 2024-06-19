@@ -105,7 +105,7 @@ export default function Jobs() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-8">
-        <p className="text-3xl font-bold">List Jobs</p>
+        <p className="text-3xl font-semibold">List Jobs</p>
         <Link href={"/jobs/new"}>
           <Button text="+ New" type="primary" />
         </Link>

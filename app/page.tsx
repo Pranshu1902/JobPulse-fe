@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
-import { Job } from "@models/models";
+import { Job, User } from "@models/models";
 import Link from "next/link";
-import Button from "@/components/Button";
+import Button from "@components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,6 +21,8 @@ export default function Home() {
     Withdrawn: [],
     Accepted: [],
   });
+  const [user, setUser] = useState<User>({id: 0, username: "", email: "", first_name: "", last_name: ""});
+
 
   const showJobCard = (job: any) => {
     return (
@@ -31,13 +33,13 @@ export default function Home() {
           <p>{job.contract_length}</p>
           <p>Salary: {job.salary}</p>
           <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faGlobe} />
-              <p className="text-xl">{job.platform}</p>
-            </div>
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faMoneyBill} />
-              <p className="text-xl">{job.salary}</p>
-            </div>
+            <FontAwesomeIcon icon={faGlobe} />
+            <p className="text-xl">{job.platform}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <FontAwesomeIcon icon={faMoneyBill} />
+            <p className="text-xl">{job.salary}</p>
+          </div>
         </div>
         <Link href={`/jobs/${job.id}`}>
           <Button
@@ -52,7 +54,6 @@ export default function Home() {
 
   const fetchData = async () => {
     const response = await request("GET", {}, "jobs/", cookies.get("token"));
-    console.log(response);
     setJobs(response);
 
     // sort by status
@@ -71,12 +72,29 @@ export default function Home() {
     setFilteredJobList(organizedJobs);
   };
 
-  fetchData();
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchUserData = async () => {
+    const response = await request(
+      "GET",
+      {},
+      "/current-user/",
+      cookies.get("token")
+    );
+    setUser(response);
+    console.log(response);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   return (
     <div className="p-4">
       <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-        <p className="text-2xl">Welcome, Pranshu</p>
+        <p className="text-3xl font-semibold">Welcome, {user?.first_name}</p>
         <Link href={"/jobs/new"}>
           <Button type="secondary" text="Add New Job" />
         </Link>
@@ -102,6 +120,7 @@ export default function Home() {
           </p>
         </div>
       </div>
+      <p>Add a status wise filter here</p>
       <div className="mt-6">
         <div className="grid md:grid-cols-3 gap-4">
           {jobs?.map((job: Job) => showJobCard(job))}
