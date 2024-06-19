@@ -93,7 +93,7 @@ export default function DashBoard({
               onClick={onLinkClick}
               className={`${
                 activeTab === tab.tabIndex && "bg-secondary"
-              } p-4 rounded-lg text-xl hover:bg-secondary w-full flex items-center gap-2`}
+              } p-4 rounded-lg text-xl hover:bg-secondary transition duration-200 w-full flex items-center gap-2`}
             >
               <FontAwesomeIcon icon={tab.icon} />
               <p>{tab.name}</p>

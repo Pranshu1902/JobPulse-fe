@@ -27,7 +27,7 @@ export default function Jobs() {
     return (
       <div
         key={status}
-        className="p-4 rounded-xl bg-lightgray min-w-[300px] w-[300px] flex flex-col max-h-[80vh]"
+        className="p-4 shadow rounded-xl bg-lightgray min-w-[300px] w-[300px] flex flex-col max-h-[80vh]"
       >
         <div className="flex justify-between items-center mb-4">
           <p className="font-semibold text-2xl">{status}</p>
@@ -49,7 +49,7 @@ export default function Jobs() {
 
   const showJobCard = (job: any) => {
     return (
-      <div key={job.id} className="bg-lightbg p-3 rounded-lg">
+      <div key={job.id} className="bg-lightbg p-3 border-2 hover:border-primary transition duration-200 shadow rounded-lg">
         <div>
           <b className="text-xl">{job.role}</b>
           <p>{job.company.name}</p>

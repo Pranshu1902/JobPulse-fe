@@ -40,7 +40,7 @@ export default function Home() {
 
   const showJobCard = (job: any) => {
     return (
-      <div key={job.id} className="bg-lightgray p-3 rounded-lg">
+      <div key={job.id} className="bg-lightgray shadow border-2 hover:border-primary transition duration-200 p-3 rounded-lg">
         <div>
           <b className="text-xl">{job.role}</b>
           <p>{job.company.name}</p>
@@ -114,19 +114,19 @@ export default function Home() {
         </Link>
       </div>
       <div className="flex md:flex-row flex-col justify-around gap-2 items-center mt-6">
-        <div className="flex flex-col gap-2 p-2 rounded-lg bg-purple-100 w-full">
+        <div className="flex flex-col gap-2 p-2 rounded-lg bg-lightgray shadow w-full">
           <p className="text-xl">Applied</p>
           <p className="font-bold text-5xl">
             {filteredJobList["Applied"]?.length}
           </p>
         </div>
-        <div className="flex flex-col gap-2 p-2 rounded-lg bg-purple-100 w-full">
+        <div className="flex flex-col gap-2 p-2 rounded-lg bg-lightgray shadow w-full">
           <p className="text-xl">Offered</p>
           <p className="font-bold text-5xl">
             {filteredJobList["Offered"]?.length}
           </p>
         </div>
-        <div className="flex flex-col gap-2 p-2 rounded-lg bg-purple-100 w-full">
+        <div className="flex flex-col gap-2 p-2 rounded-lg bg-lightgray shadow w-full">
           <p className="text-xl">Rejected</p>
           <p className="font-bold text-5xl">
             {filteredJobList["Rejected"]?.length}
@@ -138,7 +138,7 @@ export default function Home() {
           <FontAwesomeIcon icon={faFilter} /> Filter
         </Filter>
       </div>
-      <div className="mt-6">
+      <div className="mt-2">
         <div className="grid md:grid-cols-3 gap-4">
           {jobs
             ?.filter(
