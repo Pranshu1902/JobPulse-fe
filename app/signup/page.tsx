@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import logo from "@assets/logo.png";
-import { loginData } from "@models/types";
+import { signupData } from "@models/types";
 import Link from "next/link";
 import { useCookies } from "next-client-cookies";
 import { request } from "@/app/api/fetch";
@@ -13,21 +13,20 @@ import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { TextField } from "@mui/material";
 import Button from "@/components/Button";
 
-const initialLoginData: loginData = {
-  email: "",
+const initialLoginData: signupData = {
   username: "",
   password: "",
+  confirm_password: "",
 };
 
-const initialErrors: loginData = {
-  email: "",
-  username: "",
-  password: "",
-};
+// const initialErrors: signupData = {
+//   username: "",
+//   password: "",
+// };
 
 export default function Signup() {
   const [data, setData] = useState(initialLoginData);
-  const [errors, setErrors] = useState(initialErrors);
+  // const [errors, setErrors] = useState(initialErrors);
 
   const cookies = useCookies();
   const router = useRouter();
@@ -55,7 +54,12 @@ export default function Signup() {
     // if (validateData(data)) {
     // }
 
-    const datas = { username: data.email, password: data.password };
+    if (data.password !== data.confirm_password) {
+      NotificationManager.error("Password doesn't match", "Error");
+      return;
+    }
+
+    const datas = { username: data.username, password: data.password };
     const response = await request("POST", datas, "users/");
 
     if (response && response.id) {
@@ -96,8 +100,8 @@ export default function Signup() {
             id="outlined-basic"
             label="Username"
             variant="outlined"
-            value={data.email}
-            onChange={(e) => setData({ ...data, email: e.target.value })}
+            value={data.username}
+            onChange={(e) => setData({ ...data, username: e.target.value })}
           />
           <TextField
             className="w-full"
@@ -107,6 +111,17 @@ export default function Signup() {
             variant="outlined"
             value={data.password}
             onChange={(e) => setData({ ...data, password: e.target.value })}
+          />
+          <TextField
+            className="w-full"
+            id="outlined-basic"
+            label="Password"
+            type="password"
+            variant="outlined"
+            value={data.confirm_password}
+            onChange={(e) =>
+              setData({ ...data, confirm_password: e.target.value })
+            }
           />
           <Button type="primary" text="Signup" />
           {/* <button className="flex justify-center items-center gap-2 border border-black rounded-lg p-2">
