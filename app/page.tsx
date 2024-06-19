@@ -112,9 +112,8 @@ export default function Home() {
         <Link href={"/jobs/new"}>
           <Button type="secondary" text="Add New Job" />
         </Link>
-        {/* <button className="p-2 rounded-lg border border-primary">Add New Job</button> */}
       </div>
-      <div className="flex justify-around gap-2 items-center mt-6">
+      <div className="flex md:flex-row flex-col justify-around gap-2 items-center mt-6">
         <div className="flex flex-col gap-2 p-2 rounded-lg bg-purple-100 w-full">
           <p className="text-xl">Applied</p>
           <p className="font-bold text-5xl">

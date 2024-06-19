@@ -44,7 +44,7 @@ export default function Filter(props: FilterProps) {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 200 }}>
         <InputLabel id="demo-multiple-checkbox-label">{children}</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
