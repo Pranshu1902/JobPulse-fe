@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useCookies } from "next-client-cookies";
 import Breadcrumbs from "@components/Breadcrumbs";
 import DashBoard from "@components/DashBoard";
+import LandingPage from "@components/LandingPage";
 
 export default function ResponsiveDashboard({
   children,
@@ -10,6 +13,8 @@ export default function ResponsiveDashboard({
   children: React.ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const cookies = useCookies();
   const dashboardRef = useRef<HTMLDivElement>(null);
 
   const handleMenuClick = () => {
@@ -17,10 +22,7 @@ export default function ResponsiveDashboard({
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dashboardRef.current &&
-      !dashboardRef.current.contains(event.target as Node)
-    ) {
+    if (dashboardRef.current && !dashboardRef.current.contains(event.target as Node)) {
       setMenuOpen(false);
     }
   };
@@ -39,8 +41,14 @@ export default function ResponsiveDashboard({
     };
   }, [menuOpen]);
 
+  if (pathname == "/login" || pathname == "/signup") {
+    return <>{children}</>;
+  } else if (pathname == "/" && !cookies.get("token")) {
+    return <LandingPage />;
+  }
+
   return (
-    <div className="flex flex-col md:flex-row">
+    <div className="relative flex flex-col md:flex-row">
       <Breadcrumbs onMenuClick={handleMenuClick} />
       <div
         ref={dashboardRef}
@@ -50,7 +58,8 @@ export default function ResponsiveDashboard({
       >
         <DashBoard onLinkClick={() => setMenuOpen(false)} />
       </div>
-      <div className="mt-12 md:mt-0 ml-0 md:ml-[16.6667%] w-full md:w-[83.3333%] overflow-scroll">
+      <div className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"} md:hidden z-10`} />
+      <div className={`mt-12 md:mt-0 ml-0 md:ml-[16.6667%] w-full md:w-[83.3333%] overflow-scroll ${menuOpen ? "filter blur-sm" : ""}`}>
         {children}
       </div>
     </div>
