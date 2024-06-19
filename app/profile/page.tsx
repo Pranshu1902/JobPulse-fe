@@ -7,8 +7,10 @@ import { TextField } from "@mui/material";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
+  const router = useRouter();
   const cookies = useCookies();
   const [user, setUser] = useState({
     id: 0,
@@ -25,6 +27,11 @@ export default function Profile() {
 
   const enableEditMode = () => {
     setEditMode(true);
+  };
+
+  const logout = () => {
+    cookies.remove("token");
+    router.push("/login");
   };
 
   const updateUserDetails = async () => {
@@ -44,10 +51,7 @@ export default function Profile() {
     disabledEditMode();
 
     if (response?.id) {
-      NotificationManager.success(
-        "Profile updated successfully",
-        "Success"
-      );
+      NotificationManager.success("Profile updated successfully", "Success");
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
@@ -115,7 +119,10 @@ export default function Profile() {
             <Button type="primary" text="Save" onClick={updateUserDetails} />
           </div>
         ) : (
-          <Button type="primary" text="Edit" onClick={enableEditMode} />
+          <div className="flex items-center gap-4">
+            <Button type="primary" text="Edit" onClick={enableEditMode} />
+            <Button type="delete" text="Sign out" onClick={logout} />
+          </div>
         )}
       </div>
     </div>
