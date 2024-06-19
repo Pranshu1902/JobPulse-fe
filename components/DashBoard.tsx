@@ -76,14 +76,13 @@ export default function DashBoard({
       </div>
       <div className="flex flex-col gap-2 p-4 text-lg w-full mt-4">
         <p className="text-lg">Pranshu Aggarwal</p>
-        <Link
-          href="/logout"
+        <button
           onClick={logout}
-          className="rounded-lg text-xl hover:bg-green-500 flex items-center gap-2"
+          className="rounded-lg text-xl flex items-center gap-2"
         >
           <FontAwesomeIcon icon={faSignOutAlt} />
           <p>Sign Out</p>
-        </Link>
+        </button>
       </div>
     </div>
   );
