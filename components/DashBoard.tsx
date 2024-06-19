@@ -12,6 +12,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Logo from "@components/Logo";
+import { useEffect, useState } from "react";
+import { request } from "@api/fetch";
+import { User } from "@models/models";
 
 export default function DashBoard({
   onLinkClick,
@@ -21,6 +24,22 @@ export default function DashBoard({
   const cookies = useCookies();
   const pathname = usePathname();
   const router = useRouter();
+  const [user, setUser] = useState<User>({id: 0, username: "", email: "", first_name: "", last_name: ""});
+
+  const fetchUserData = async () => {
+    const response = await request(
+      "GET",
+      {},
+      "/current-user/",
+      cookies.get("token")
+    );
+    setUser(response);
+    console.log(response);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
   if (pathname == "/login" || pathname == "/signup") {
     return null;
@@ -75,7 +94,7 @@ export default function DashBoard({
         </div>
       </div>
       <div className="flex flex-col gap-2 p-4 text-lg w-full mt-4">
-        <p className="text-lg">Pranshu Aggarwal</p>
+        <p className="text-lg">{user?.first_name + " " + user?.last_name}</p>
         <button
           onClick={logout}
           className="rounded-lg text-xl flex items-center gap-2"

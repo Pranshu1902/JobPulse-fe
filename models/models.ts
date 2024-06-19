@@ -22,7 +22,7 @@ export type JobComment = {
   job: string;
   comment: string;
   date: string;
-}
+};
 
 export type Job = {
   id: string;
@@ -46,4 +46,12 @@ export type JobCreateModel = {
   job_link: string;
   platform: string;
   salary: string;
+};
+
+export type User = {
+  id: number;
+  email: string;
+  username: string;
+  first_name: string;
+  last_name: string;
 };
