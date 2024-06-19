@@ -88,7 +88,7 @@ export default function Signup() {
   return (
     <div className="flex flex-col md:flex-row h-screen">
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full bg-primary">
-        <Image src={logo} alt="logo" className="w-1/3"></Image>
+        <Image src={logo} alt="logo" className="w-2/3 md:w-1/3"></Image>
         {/* <p className="font-bold text-5xl">JobPulse</p> */}
         {/* <p>Stay Ahead of the Game with JobPulse</p> */}
       </div>
