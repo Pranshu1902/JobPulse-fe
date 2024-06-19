@@ -3,9 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import logo from "@assets/logo.png";
-import google from "@assets/google.png";
 import { loginData } from "@models/types";
-import TextInput from "@components/TextInput";
 import Link from "next/link";
 // import { cookies } from "next/headers";
 import { useCookies } from "next-client-cookies";
@@ -13,6 +11,8 @@ import { request } from "@/app/api/fetch";
 import { useRouter } from "next/navigation";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
+import { TextField } from "@mui/material";
+import Button from "@/components/Button";
 
 const initialLoginData: loginData = {
   email: "",
@@ -84,33 +84,33 @@ export default function Login() {
       </div>
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full">
         <p className="text-3xl font-bold">Login</p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Replace custom component with some package */}
-          <TextInput
-            title="Email"
-            type={"text"}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
+          <TextField
+            className="w-full"
+            id="outlined-basic"
+            label="Username"
+            variant="outlined"
             value={data.email}
-            setValue={(e) => setData({ ...data, email: e.target.value })}
-            error={errors.email}
-          ></TextInput>
-          <TextInput
-            title="Password"
-            type={"password"}
+            onChange={(e) => setData({ ...data, email: e.target.value })}
+          />
+          <TextField
+            className="w-full"
+            id="outlined-basic"
+            label="Password"
+            type="password"
+            variant="outlined"
             value={data.password}
-            setValue={(e) => setData({ ...data, password: e.target.value })}
-            error={errors.password}
-          ></TextInput>
-          <button type="submit" className="border border-black rounded-lg p-2">
-            Login
-          </button>
-          <button className="flex justify-center items-center gap-2 border border-black rounded-lg p-2">
+            onChange={(e) => setData({ ...data, password: e.target.value })}
+          />
+          <Button type="primary" text="Login" />
+          {/* <button className="flex justify-center items-center gap-2 border border-black rounded-lg p-2">
             <Image width={25} src={google} alt="google"></Image>
             Login with Google
-          </button>
+          </button> */}
         </form>
         <p>
           New User?{" "}
-          <Link href={"/signup"} className="text-blue-500">
+          <Link href={"/signup"} className="text-primary">
             Signup
           </Link>
         </p>
