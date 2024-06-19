@@ -82,7 +82,7 @@ export default function Login() {
       </div>
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full">
         <p className="text-3xl font-bold">Login</p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 w-[300px]">
           <TextField
             className="w-full"
             id="outlined-basic"
