@@ -15,20 +15,18 @@ import { TextField } from "@mui/material";
 import Button from "@/components/Button";
 
 const initialLoginData: loginData = {
-  email: "",
   username: "",
   password: "",
 };
 
-const initialErrors: loginData = {
-  email: "",
-  username: "",
-  password: "",
-};
+// const initialErrors: loginData = {
+//   username: "",
+//   password: "",
+// };
 
 export default function Login() {
   const [data, setData] = useState(initialLoginData);
-  const [errors, setErrors] = useState(initialErrors);
+  // const [errors, setErrors] = useState(initialErrors);
 
   const cookies = useCookies();
   const router = useRouter();
@@ -56,7 +54,7 @@ export default function Login() {
     // if (validateData(data)) {
     // }
 
-    const datas = { username: data.email, password: data.password };
+    const datas = { username: data.username, password: data.password };
     const response = await request("POST", datas, "api-token-auth/");
 
     if (response && response["token"]) {
@@ -90,8 +88,8 @@ export default function Login() {
             id="outlined-basic"
             label="Username"
             variant="outlined"
-            value={data.email}
-            onChange={(e) => setData({ ...data, email: e.target.value })}
+            value={data.username}
+            onChange={(e) => setData({ ...data, username: e.target.value })}
           />
           <TextField
             className="w-full"
