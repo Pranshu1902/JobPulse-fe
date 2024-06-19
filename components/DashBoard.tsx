@@ -6,13 +6,18 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
+  faSignOutAlt,
   faUser,
   faUserGraduate,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Logo from "@components/Logo";
 
-export default function DashBoard() {
+export default function DashBoard({
+  onLinkClick,
+}: {
+  onLinkClick: () => void;
+}) {
   const cookies = useCookies();
   const pathname = usePathname();
   const router = useRouter();
@@ -60,6 +65,7 @@ export default function DashBoard() {
               className={`${
                 activeTab === tab.tabIndex && "bg-secondary"
               } p-4 rounded-lg text-xl hover:bg-secondary w-full flex items-center gap-2`}
+              onClick={onLinkClick}
             >
               <FontAwesomeIcon icon={tab.icon} />
               <p>{tab.name}</p>
@@ -67,14 +73,16 @@ export default function DashBoard() {
           ))}
         </div>
       </div>
-      <div className="flex items-center gap-3 p-4 text-lg w-full mt-4">
-        <FontAwesomeIcon icon={faUser} />
-        <div>
-          <p className="text-lg">Pranshu Aggarwal</p>
-          <button onClick={logout} className="hover:cursor-pointer text-md">
-            Sign Out
-          </button>
-        </div>
+      <div className="flex flex-col gap-2 p-4 text-lg w-full mt-4">
+        <p className="text-lg">Pranshu Aggarwal</p>
+        <Link
+          href="/logout"
+          onClick={onLinkClick}
+          className="rounded-lg text-xl hover:bg-green-500 w-full flex items-center gap-2"
+        >
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          <p>Sign Out</p>
+        </Link>
       </div>
     </div>
   );
