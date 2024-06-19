@@ -7,7 +7,15 @@ import { Job, User } from "@models/models";
 import Link from "next/link";
 import Button from "@components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGlobe,
+  faMoneyBill,
+  faFilter,
+  faCross,
+  faRemove,
+} from "@fortawesome/free-solid-svg-icons";
+import Filter from "@/components/Filter";
+import { JOB_STATUSES } from "./constants/constants";
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);
@@ -21,8 +29,14 @@ export default function Home() {
     Withdrawn: [],
     Accepted: [],
   });
-  const [user, setUser] = useState<User>({id: 0, username: "", email: "", first_name: "", last_name: ""});
-
+  const [user, setUser] = useState<User>({
+    id: 0,
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+  });
+  const [filter, setFilter] = useState<string[]>([]);
 
   const showJobCard = (job: any) => {
     return (
@@ -120,10 +134,19 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <p>Add a status wise filter here</p>
+      <div className="flex justify-end mt-4">
+        <Filter statuses={JOB_STATUSES} filter={filter} setFilter={setFilter}>
+          <FontAwesomeIcon icon={faFilter} /> Filter
+        </Filter>
+      </div>
       <div className="mt-6">
         <div className="grid md:grid-cols-3 gap-4">
-          {jobs?.map((job: Job) => showJobCard(job))}
+          {jobs
+            ?.filter(
+              (job: Job) =>
+                filter.length === 0 || filter.includes(job.status.status)
+            )
+            .map((job: Job) => showJobCard(job))}
         </div>
       </div>
     </div>
