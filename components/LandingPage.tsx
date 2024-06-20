@@ -5,6 +5,8 @@ import status from "@assets/home/status.png";
 import Link from "next/link";
 import Button from "@components/Button";
 import Logo from "@components/Logo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
 export default function LandingPage() {
   return (
@@ -147,6 +149,18 @@ export default function LandingPage() {
 
       <footer className="text-center p-6 bg-primary text-white mt-12">
         <p>© 2024 JobPulse. All rights reserved.</p>
+        <div className="flex justify-center items-center p-2">
+          Made with &nbsp; <FontAwesomeIcon icon={faHeart} className="text-red-500" />&nbsp;
+          by&nbsp;
+          <a
+            href="https://pranshuaggarwal.me"
+            target={"_blank"}
+            rel={"noreferrer"}
+            className="transition duration-300 underline"
+          >
+            Pranshu
+          </a>
+        </div>
       </footer>
     </div>
   );
