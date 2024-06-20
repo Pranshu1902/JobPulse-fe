@@ -97,6 +97,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchData();
+    document.title = `Home | JobPulse`;
   }, []);
 
   const fetchUserData = async () => {
@@ -120,7 +121,9 @@ export default function Home() {
       ) : (
         <>
           <div className="flex flex-col md:flex-row md:justify-between md:items-center">
-            <p className="text-3xl font-semibold">Welcome, {user?.first_name}</p>
+            <p className="text-3xl font-semibold">
+              Welcome, {user?.first_name}
+            </p>
             <Link href={"/jobs/new"}>
               <Button type="primary" text="Add New Job" />
             </Link>
@@ -146,7 +149,11 @@ export default function Home() {
             </div>
           </div>
           <div className="flex justify-end mt-4">
-            <Filter statuses={JOB_STATUSES} filter={filter} setFilter={setFilter}>
+            <Filter
+              statuses={JOB_STATUSES}
+              filter={filter}
+              setFilter={setFilter}
+            >
               <FontAwesomeIcon icon={faFilter} className="mr-2" /> Filter
             </Filter>
           </div>

@@ -71,6 +71,10 @@ export default function UpdateJobStatus() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    document.title = `Update Status | ${jobDetails?.role} | JobPulse`;
+  }, [jobDetails]);
+
   return (
     <div className="p-4">
       {loading && <Loader />} {/* Display loader when loading is true */}

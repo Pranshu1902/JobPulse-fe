@@ -102,6 +102,7 @@ export default function Jobs() {
 
   useEffect(() => {
     fetchData();
+    document.title = "Jobs | JobPulse";
   }, []);
 
   const scrollLeft = () => {

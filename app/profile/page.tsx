@@ -80,6 +80,7 @@ export default function Profile() {
 
   useEffect(() => {
     fetchUserData();
+    document.title = "Profile | JobPulse";
   }, []);
 
   return (

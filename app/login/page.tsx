@@ -53,6 +53,7 @@ export default function Login() {
     if (cookies.get("token")) {
       router.push("/");
     }
+    document.title = "Login | JobPulse";
   }, [cookies, router]);
 
   return (

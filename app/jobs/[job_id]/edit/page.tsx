@@ -46,6 +46,10 @@ export default function EditJob() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    document.title = `Edit Job | ${jobData?.role} | JobPulse`;
+  }, [jobData]);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 

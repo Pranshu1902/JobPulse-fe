@@ -120,6 +120,10 @@ export default function JobDetail() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    document.title = `${jobDetails?.role} | JobPulse`;
+  }, [jobDetails]);
+
   if (!jobId || !jobDetails?.id || loading) {
     return <Loader />; // Display loader while fetching data
   }

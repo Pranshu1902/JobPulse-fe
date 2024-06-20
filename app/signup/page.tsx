@@ -67,6 +67,7 @@ export default function Signup() {
     if (cookies.get("token")) {
       router.push("/");
     }
+    document.title = "Signup | JobPulse";
   }, [cookies, router]);
 
   return (
@@ -76,7 +77,10 @@ export default function Signup() {
       </div>
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full">
         <p className="text-3xl font-bold">Signup</p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 w-[300px]">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 mt-4 w-[300px]"
+        >
           <TextField
             className="w-full"
             id="outlined-basic"
@@ -101,7 +105,9 @@ export default function Signup() {
             type="password"
             variant="outlined"
             value={data.confirm_password}
-            onChange={(e) => setData({ ...data, confirm_password: e.target.value })}
+            onChange={(e) =>
+              setData({ ...data, confirm_password: e.target.value })
+            }
           />
           <Button type="primary" text="Signup" />
 

@@ -5,7 +5,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { request } from "@/app/api/fetch";
 import { useCookies } from "next-client-cookies";
@@ -45,10 +45,14 @@ export default function NewJob() {
     }
   };
 
-  // Pending: 
-  // Custom hook for user details (or maybe just place it in cookies directly), 
+  // Pending:
+  // Custom hook for user details (or maybe just place it in cookies directly),
   // Signup with Google
   // Update Header of tab for each page
+
+  useEffect(() => {
+    document.title = "New Job | JobPulse";
+  }, []);
 
   return (
     <div className="p-4">
@@ -120,7 +124,11 @@ export default function NewJob() {
           />
         </div>
         <div className="flex justify-center items-center">
-          <Button type={"primary"} buttonType="submit" text="Create Job"></Button>
+          <Button
+            type={"primary"}
+            buttonType="submit"
+            text="Create Job"
+          ></Button>
         </div>
       </form>
     </div>
