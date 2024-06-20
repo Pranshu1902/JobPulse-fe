@@ -50,7 +50,7 @@ export default function LandingPage() {
             <h2 className="text-4xl font-bold text-primary mb-6">
               Why Choose JobPulse?
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 p-6">
               <div className="p-6 bg-white shadow-lg rounded-lg">
                 <h3 className="text-2xl font-bold text-primary mb-4">
                   Efficiency
@@ -85,17 +85,17 @@ export default function LandingPage() {
         {/* Information cards */}
         <section className="p-8 mt-48">
           <div className="grid grid-cols-1 gap-16">
-            <h2 className="text-4xl font-bold text-primary mb-6 flex justify-center">
+            <h2 className="text-4xl font-bold text-primary mb-6 flex justify-center text-center">
               Explore JobPulse Features
             </h2>
 
             <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
               <Image
-                className="w-full md:w-3/4 rounded-lg"
+                className="w-full md:w-1/2 rounded-lg"
                 src={jobs}
                 alt="jobs page"
               />
-              <div className="text-center md:text-left md:pr-6">
+              <div className="text-center md:w-1/2 md:text-left md:pr-6">
                 <h2 className="text-4xl font-bold text-gray-800 mb-2">
                   Kanban Boards
                 </h2>
@@ -110,11 +110,11 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center md:items-start md:flex-row-reverse gap-12 p-6 bg-white shadow-lg rounded-lg">
               <Image
-                className="w-full md:w-3/4 rounded-lg"
+                className="w-full md:w-1/2 rounded-lg"
                 src={status}
                 alt="status page"
               />
-              <div className="text-center md:text-right md:pr-6">
+              <div className="text-center md:w-1/2 md:text-right md:pr-6">
                 <h2 className="text-4xl font-bold text-gray-800 mb-2">
                   Timeline Management
                 </h2>
@@ -128,11 +128,11 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
               <Image
-                className="w-full md:w-3/4 rounded-lg"
+                className="w-full md:w-1/2 rounded-lg"
                 src={job_detail}
                 alt="job detail page"
               />
-              <div className="text-center md:text-left md:pl-6">
+              <div className="text-center md:w-1/2 md:text-left md:pl-6">
                 <h2 className="text-4xl font-bold text-gray-800 mb-2">
                   Progress Tracking
                 </h2>
