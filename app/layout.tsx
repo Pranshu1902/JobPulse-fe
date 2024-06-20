@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import ResponsiveDashboard from "@components/ResponsiveDashboard";
 import { CookiesProvider } from "next-client-cookies/server";
+import { AuthProvider } from "@context/AuthContext";
 
 config.autoAddCss = false;
 
@@ -20,14 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <CookiesProvider>
-      <html lang="en">
-        <body>
-          <ResponsiveDashboard>
-            <Notification>{children}</Notification>
-          </ResponsiveDashboard>
-        </body>
-      </html>
-    </CookiesProvider>
+    <AuthProvider>
+      <CookiesProvider>
+        <html lang="en">
+          <body>
+            <ResponsiveDashboard>
+              <Notification>{children}</Notification>
+            </ResponsiveDashboard>
+          </body>
+        </html>
+      </CookiesProvider>
+    </AuthProvider>
   );
 }

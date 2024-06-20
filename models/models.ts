@@ -65,3 +65,12 @@ export type User = {
   first_name: string;
   last_name: string;
 };
+
+export type AuthUser = {
+  id?: number;
+  email?: string;
+  username?: string;
+  first_name?: string;
+  last_name?: string;
+  token?: string;
+};
