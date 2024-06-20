@@ -16,7 +16,7 @@ export default function LandingPage() {
         <div className="flex items-center gap-6">
           <Logo />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           <Link href={"/login"}>
             <Button type="primary" text="Login" />
           </Link>
