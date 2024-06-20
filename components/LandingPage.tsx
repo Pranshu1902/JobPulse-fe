@@ -138,7 +138,7 @@ export default function LandingPage() {
                 </h2>
                 <p className="text-gray-600 text-xl">
                   Add comments and notes to each job application to track your
-                  progress. Stay on top of every detail and ensure that you're
+                  progress. Stay on top of every detail and ensure that you&apos;re
                   always prepared for your next interview.
                 </p>
               </div>
