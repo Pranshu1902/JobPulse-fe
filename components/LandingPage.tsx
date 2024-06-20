@@ -34,7 +34,7 @@ export default function LandingPage() {
               Welcome to <span className="text-primary">JobPulse</span>
             </h1>
             <p className="text-2xl md:text-4xl mb-8">
-              Streamline your job search and application process with ease.
+              Streamline your job application process with ease.
             </p>
             <Link href={"/signup"} className="mt-8">
               <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-12 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
@@ -102,8 +102,7 @@ export default function LandingPage() {
                 <p className="text-gray-600 text-xl">
                   Easily manage your job applications with our intuitive Kanban
                   boards. Track the status of each application and move them
-                  through different stages with a simple drag-and-drop
-                  interface.
+                  through different stages with a simple interface.
                 </p>
               </div>
             </div>
@@ -119,9 +118,10 @@ export default function LandingPage() {
                   Timeline Management
                 </h2>
                 <p className="text-gray-600 text-xl">
-                  Keep track of your application timelines effortlessly. Set
-                  reminders, track important dates, and never miss a follow-up
-                  with our powerful timeline management features.
+                  Keep track of your application timelines effortlessly. View
+                  the timely updates posted on your application and track
+                  important dates. Never miss a follow-up with our powerful
+                  timeline management features.
                 </p>
               </div>
             </div>
@@ -138,8 +138,8 @@ export default function LandingPage() {
                 </h2>
                 <p className="text-gray-600 text-xl">
                   Add comments and notes to each job application to track your
-                  progress. Stay on top of every detail and ensure that you&apos;re
-                  always prepared for your next interview.
+                  progress. Stay on top of every detail and ensure that
+                  you&apos;re always prepared for your next interview.
                 </p>
               </div>
             </div>
@@ -150,8 +150,9 @@ export default function LandingPage() {
       <footer className="text-center p-6 bg-primary text-white mt-12">
         <p>© 2024 JobPulse. All rights reserved.</p>
         <div className="flex justify-center items-center p-2">
-          Made with &nbsp; <FontAwesomeIcon icon={faHeart} className="text-red-500" />&nbsp;
-          by&nbsp;
+          Made with &nbsp;{" "}
+          <FontAwesomeIcon icon={faHeart} className="text-red-500" />
+          &nbsp; by&nbsp;
           <a
             href="https://pranshuaggarwal.me"
             target={"_blank"}
