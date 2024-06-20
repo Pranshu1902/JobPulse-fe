@@ -45,6 +45,11 @@ export default function NewJob() {
     }
   };
 
+  // Pending: 
+  // Custom hook for user details (or maybe just place it in cookies directly), 
+  // Signup with Google
+  // Update Header of tab for each page
+
   return (
     <div className="p-4">
       <div className="mb-4">

@@ -16,6 +16,12 @@ import { TextField } from "@mui/material";
 import { NotificationManager } from "react-notifications";
 import Button from "@/components/Button";
 
+const Loader = () => (
+  <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-primary"></div>
+  </div>
+);
+
 export default function UpdateJobStatus() {
   const router = useRouter();
   const params = useParams();
@@ -24,8 +30,10 @@ export default function UpdateJobStatus() {
   const [jobDetails, setJobDetails] = useState<Job>();
   const [status, setStatus] = useState<JobStatus>("Applied");
   const [updateText, setUpdateText] = useState("");
+  const [loading, setLoading] = useState(false); // State to manage loading status
 
   const fetchData = async () => {
+    setLoading(true); // Set loading to true while fetching data
     const response = await request(
       "GET",
       {},
@@ -33,13 +41,13 @@ export default function UpdateJobStatus() {
       cookies.get("token")
     );
     setJobDetails(response);
-
-    // set the current value of status dropdown as current status of job
     setStatus(response.status.status);
+    setLoading(false); // Reset loading state after data fetching completes
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when submitting form
 
     const data = { status: status, update_text: updateText };
     const response = await request(
@@ -55,6 +63,8 @@ export default function UpdateJobStatus() {
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
+
+    setLoading(false); // Reset loading state after request completes
   };
 
   useEffect(() => {
@@ -63,6 +73,7 @@ export default function UpdateJobStatus() {
 
   return (
     <div className="p-4">
+      {loading && <Loader />} {/* Display loader when loading is true */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center gap-2">
         <div className="flex items-center gap-2 font-semibold text-2xl">
           <button onClick={() => router.back()}>

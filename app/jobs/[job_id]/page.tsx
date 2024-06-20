@@ -49,6 +49,10 @@ export default function JobDetail() {
     router.push(`/jobs/${jobId}/status`);
   };
 
+  const editJob = () => {
+    router.push(`/jobs/${jobId}/edit`);
+  };
+
   const addComment = async () => {
     const data = { comment: newComment };
     const response = await request(
@@ -171,7 +175,7 @@ export default function JobDetail() {
             text="Update Status"
             onClick={updateJobStatus}
           />
-          {/* <Button type="primary" text="Edit Job" onClick={editJob} /> */}
+          <Button type="primary" text="Edit Job" onClick={editJob} />
           <Button
             type="delete"
             text="Delete Job"

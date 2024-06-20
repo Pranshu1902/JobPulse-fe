@@ -9,6 +9,12 @@ import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
 import { useRouter } from "next/navigation";
 
+const Loader = () => (
+  <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-primary"></div>
+  </div>
+);
+
 export default function Profile() {
   const router = useRouter();
   const cookies = useCookies();
@@ -20,6 +26,7 @@ export default function Profile() {
     last_name: "",
   });
   const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(false); // State to manage loading status
 
   const disabledEditMode = () => {
     setEditMode(false);
@@ -35,6 +42,8 @@ export default function Profile() {
   };
 
   const updateUserDetails = async () => {
+    setLoading(true); // Set loading to true when updating profile
+
     const data = {
       username: user.username,
       email: user.email,
@@ -47,14 +56,16 @@ export default function Profile() {
       `/users/${user.id}/`,
       cookies.get("token")
     );
-    fetchUserData();
-    disabledEditMode();
 
     if (response?.id) {
       NotificationManager.success("Profile updated successfully", "Success");
+      fetchUserData(); // Refresh user data after update
+      disabledEditMode();
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
+
+    setLoading(false); // Reset loading state after request completes
   };
 
   const fetchUserData = async () => {
@@ -125,6 +136,9 @@ export default function Profile() {
           </div>
         )}
       </div>
+
+      {/* Loader displayed conditionally based on 'loading' state */}
+      {loading && <Loader />}
     </div>
   );
 }
