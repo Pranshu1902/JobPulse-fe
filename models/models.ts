@@ -48,6 +48,16 @@ export type JobCreateModel = {
   salary: string;
 };
 
+export type JobEditModel = {
+  role: string;
+  company: Company;
+  application_date: string;
+  contract_length: string;
+  job_link: string;
+  platform: string;
+  salary: string;
+};
+
 export type User = {
   id: number;
   email: string;
