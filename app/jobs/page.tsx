@@ -1,14 +1,15 @@
 "use client";
 
-import { JOB_STATUSES } from "@constants/constants";
+import { useEffect, useState, useRef } from "react";
 import { request } from "@api/fetch";
 import { useCookies } from "next-client-cookies";
-import { useEffect, useState, useRef } from "react";
 import { Job, JobStatus } from "@/models/models";
 import Link from "next/link";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/Button";
+import Loader from "@components/Loader";
+import { JOB_STATUSES } from "../constants/constants";
 
 export default function Jobs() {
   const cookies = useCookies();
@@ -22,6 +23,7 @@ export default function Jobs() {
     Accepted: [],
   });
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
 
   const showBoardColumn = (status: JobStatus) => {
     return (
@@ -49,7 +51,10 @@ export default function Jobs() {
 
   const showJobCard = (job: any) => {
     return (
-      <div key={job.id} className="bg-lightbg p-3 border-2 hover:border-primary transition duration-200 shadow rounded-lg">
+      <div
+        key={job.id}
+        className="bg-lightbg p-3 border-2 hover:border-primary transition duration-200 shadow rounded-lg"
+      >
         <div>
           <b className="text-xl">{job.role}</b>
           <p>{job.company.name}</p>
@@ -57,33 +62,42 @@ export default function Jobs() {
           <p>Salary: {job.salary}</p>
         </div>
         <Link href={`/jobs/${job.id}`}>
-          <Button
-            className="mt-4"
-            type="secondary"
-            text="View Details"
-          ></Button>
+          <Button className="mt-4" type="secondary" text="View Details" />
         </Link>
       </div>
     );
   };
 
   const fetchData = async () => {
-    const response = await request("GET", {}, "jobs/", cookies.get("token"));
+    try {
+      setLoading(true); // Set loading to true when fetching starts
+      const response = await request("GET", {}, "jobs/", cookies.get("token"));
 
-    // sort by status
-    const organizedJobs = response.reduce(
-      (acc: { [key: string]: Job[] }, job: Job) => {
-        const status = job.status.status;
-        if (!acc[status]) {
-          acc[status] = [];
+      // sort by status
+      const organizedJobs = response.reduce(
+        (acc: { [key: string]: Job[] }, job: Job) => {
+          const status = job.status.status;
+          if (!acc[status]) {
+            acc[status] = [];
+          }
+          acc[status].push(job);
+          return acc;
+        },
+        {
+          Applied: [],
+          Offered: [],
+          Rejected: [],
+          Withdrawn: [],
+          Accepted: [],
         }
-        acc[status].push(job);
-        return acc;
-      },
-      { Applied: [], Offered: [], Rejected: [], Withdrawn: [], Accepted: [] }
-    );
+      );
 
-    setFilteredJobList(organizedJobs);
+      setFilteredJobList(organizedJobs);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setLoading(false); // Set loading to false when fetching completes
+    }
   };
 
   useEffect(() => {
@@ -104,31 +118,37 @@ export default function Jobs() {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center mb-8">
-        <p className="text-3xl font-semibold">List Jobs</p>
-        <Link href={"/jobs/new"}>
-          <Button text="+ New" type="primary" />
-        </Link>
-      </div>
-      <div className="flex gap-4 relative">
-        <button
-          className="absolute px-3 left-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
-          onClick={scrollLeft}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-        <div className="flex gap-4 overflow-x-auto" ref={scrollRef}>
-          {JOB_STATUSES.map((job_status: JobStatus) =>
-            showBoardColumn(job_status)
-          )}
-        </div>
-        <button
-          className="absolute px-3 right-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
-          onClick={scrollRight}
-        >
-          <FontAwesomeIcon icon={faArrowRight} />
-        </button>
-      </div>
+      {loading ? (
+        <Loader /> // Display loader while fetching data
+      ) : (
+        <>
+          <div className="flex justify-between items-center mb-8">
+            <p className="text-3xl font-semibold">List Jobs</p>
+            <Link href={"/jobs/new"}>
+              <Button text="+ New" type="primary" />
+            </Link>
+          </div>
+          <div className="flex gap-4 relative">
+            <button
+              className="absolute px-3 left-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
+              onClick={scrollLeft}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <div className="flex gap-4 overflow-x-auto" ref={scrollRef}>
+              {JOB_STATUSES.map((job_status: JobStatus) =>
+                showBoardColumn(job_status)
+              )}
+            </div>
+            <button
+              className="absolute px-3 right-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
+              onClick={scrollRight}
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -20,6 +20,7 @@ import ConfirmDelete from "@/components/modals/ConfirmDelete";
 import StatusTimeline from "@/components/Timeline";
 import { TextField } from "@mui/material";
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -30,6 +31,7 @@ export default function JobDetail() {
   const [showStatusHistory, setShowStatusHistory] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newComment, setNewComment] = useState("");
+  const [loading, setLoading] = useState(true); // State to manage loading status
 
   const displayStatusUpdatesRecord = () => {
     setShowStatusHistory(true);
@@ -93,21 +95,29 @@ export default function JobDetail() {
   };
 
   const fetchData = async () => {
-    const response = await request(
-      "GET",
-      {},
-      `/jobs/${jobId}`,
-      cookies.get("token")
-    );
-    setJobDetails(response);
+    setLoading(true); // Set loading to true when fetching starts
+    try {
+      const response = await request(
+        "GET",
+        {},
+        `/jobs/${jobId}`,
+        cookies.get("token")
+      );
+      setJobDetails(response);
+    } catch (error) {
+      console.error("Error fetching job details:", error);
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    } finally {
+      setLoading(false); // Set loading to false when fetching completes
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  if (!jobId || !jobDetails?.id) {
-    return <div>Loading...</div>;
+  if (!jobId || !jobDetails?.id || loading) {
+    return <Loader />; // Display loader while fetching data
   }
 
   return (
