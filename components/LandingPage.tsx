@@ -1,14 +1,16 @@
 import Image from "next/image";
-import home from "@assets/home/home.png";
+import jobs from "@assets/home/jobs.png";
+import job_detail from "@assets/home/job_detail.png";
+import status from "@assets/home/status.png";
 import Link from "next/link";
-import Button from "./Button";
-import Logo from "./Logo";
+import Button from "@components/Button";
+import Logo from "@components/Logo";
 
 export default function LandingPage() {
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="flex justify-between bg-primary p-3">
+      <header className="flex justify-between bg-primary p-6 shadow-md">
         <div className="flex items-center gap-6">
           <Logo />
         </div>
@@ -20,26 +22,132 @@ export default function LandingPage() {
             <Button type="secondary" text="Signup" />
           </Link>
         </div>
-      </div>
-      <div className="p-4">
-        <div className="flex flex-col mt-6">
-          <p className="text-6xl font-bold">
-            Stay Ahead of the Game with JobPulse
-          </p>
-        </div>
-        <div className="mt-12">
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <Image
-              className="w-1/2 rounded-lg shadow"
-              src={home}
-              alt="home page"
-            />
-            <p className="text-2xl flex justify-center w-1/2">
-              Interactive Dashboards!
+      </header>
+
+      <main>
+        {/* Hero Section */}
+        <section className="relative bg-white py-20 mb-32">
+          <div className="container mx-auto text-center">
+            <h1 className="text-6xl md:text-8xl font-extrabold leading-tight mb-6">
+              Welcome to <span className="text-primary">JobPulse</span>
+            </h1>
+            <p className="text-2xl md:text-4xl mb-8">
+              Streamline your job search and application process with ease.
             </p>
+            <Link href={"/signup"} className="mt-8">
+              <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-indigo-600 hover:to-purple-600 text-white font-bold py-3 px-12 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                Get Started
+              </button>
+            </Link>
           </div>
-        </div>
-      </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="mt-24 bg-gray-50">
+          <div className="container mx-auto text-center">
+            <h2 className="text-4xl font-bold text-primary mb-6">
+              Why Choose JobPulse?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="p-6 bg-white shadow-lg rounded-lg">
+                <h3 className="text-2xl font-bold text-primary mb-4">
+                  Efficiency
+                </h3>
+                <p className="text-gray-600">
+                  Manage all your job applications in one place, saving time and
+                  reducing stress.
+                </p>
+              </div>
+              <div className="p-6 bg-white shadow-lg rounded-lg">
+                <h3 className="text-2xl font-bold text-primary mb-4">
+                  Organization
+                </h3>
+                <p className="text-gray-600">
+                  Keep track of your progress with intuitive tools and features
+                  designed to help you stay organized.
+                </p>
+              </div>
+              <div className="p-6 bg-white shadow-lg rounded-lg">
+                <h3 className="text-2xl font-bold text-primary mb-4">
+                  Success
+                </h3>
+                <p className="text-gray-600">
+                  Increase your chances of landing your dream job with our
+                  comprehensive job tracking system.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Information cards */}
+        <section className="p-8 mt-48">
+          <div className="grid grid-cols-1 gap-16">
+            <h2 className="text-4xl font-bold text-primary mb-6 flex justify-center">
+              Explore JobPulse Features
+            </h2>
+
+            <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
+              <Image
+                className="w-full md:w-3/4 rounded-lg"
+                src={jobs}
+                alt="jobs page"
+              />
+              <div className="text-center md:text-left md:pr-6">
+                <h2 className="text-4xl font-bold text-gray-800 mb-2">
+                  Kanban Boards
+                </h2>
+                <p className="text-gray-600 text-xl">
+                  Easily manage your job applications with our intuitive Kanban
+                  boards. Track the status of each application and move them
+                  through different stages with a simple drag-and-drop
+                  interface.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center md:items-start md:flex-row-reverse gap-12 p-6 bg-white shadow-lg rounded-lg">
+              <Image
+                className="w-full md:w-3/4 rounded-lg"
+                src={status}
+                alt="status page"
+              />
+              <div className="text-center md:text-right md:pr-6">
+                <h2 className="text-4xl font-bold text-gray-800 mb-2">
+                  Timeline Management
+                </h2>
+                <p className="text-gray-600 text-xl">
+                  Keep track of your application timelines effortlessly. Set
+                  reminders, track important dates, and never miss a follow-up
+                  with our powerful timeline management features.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
+              <Image
+                className="w-full md:w-3/4 rounded-lg"
+                src={job_detail}
+                alt="job detail page"
+              />
+              <div className="text-center md:text-left md:pl-6">
+                <h2 className="text-4xl font-bold text-gray-800 mb-2">
+                  Progress Tracking
+                </h2>
+                <p className="text-gray-600 text-xl">
+                  Add comments and notes to each job application to track your
+                  progress. Stay on top of every detail and ensure that you're
+                  always prepared for your next interview.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="text-center p-6 bg-primary text-white mt-12">
+        <p>© 2024 JobPulse. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
