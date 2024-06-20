@@ -48,7 +48,6 @@ export default function NewJob() {
   // Pending:
   // Custom hook for user details (or maybe just place it in cookies directly),
   // Signup with Google
-  // Update Header of tab for each page
 
   useEffect(() => {
     document.title = "New Job | JobPulse";
