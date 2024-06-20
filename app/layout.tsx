@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <AuthProvider>
-      <CookiesProvider>
+    <CookiesProvider>
+      <AuthProvider>
         <html lang="en">
           <body>
             <ResponsiveDashboard>
@@ -30,7 +30,7 @@ export default function RootLayout({
             </ResponsiveDashboard>
           </body>
         </html>
-      </CookiesProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </CookiesProvider>
   );
 }
