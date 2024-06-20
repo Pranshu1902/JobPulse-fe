@@ -5,6 +5,7 @@ import Notification from "@components/notification";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import ResponsiveDashboard from "@components/ResponsiveDashboard";
+import { CookiesProvider } from "next-client-cookies/server";
 
 config.autoAddCss = false;
 
@@ -19,12 +20,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <ResponsiveDashboard>
-          <Notification>{children}</Notification>
-        </ResponsiveDashboard>
-      </body>
-    </html>
+    <CookiesProvider>
+      <html lang="en">
+        <body>
+          <ResponsiveDashboard>
+            <Notification>{children}</Notification>
+          </ResponsiveDashboard>
+        </body>
+      </html>
+    </CookiesProvider>
   );
 }
