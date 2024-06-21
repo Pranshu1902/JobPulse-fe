@@ -45,10 +45,6 @@ export default function NewJob() {
     }
   };
 
-  // Pending:
-  // Custom hook for user details (or maybe just place it in cookies directly),
-  // Signup with Google
-
   useEffect(() => {
     document.title = "New Job | JobPulse";
   }, []);
