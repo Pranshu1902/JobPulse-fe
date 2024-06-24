@@ -28,7 +28,8 @@
       "@constants/*": ["./app/constants/*"],
       "@modals/*": ["./components/modals/*"],
       "@hooks/*": ["./hooks/*"],
-      "@context/*": ["./context/*"]
+      "@context/*": ["./context/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
