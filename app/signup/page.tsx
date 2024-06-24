@@ -13,6 +13,7 @@ import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { TextField } from "@mui/material";
 import Button from "@/components/Button";
 import Loader from "@/components/Loader"; // Assuming Loader component is defined
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const initialSignupData: signupData = {
   username: "",
@@ -25,6 +26,10 @@ export default function Signup() {
   const [loading, setLoading] = useState(false); // State to manage loading status
   const cookies = useCookies();
   const router = useRouter();
+
+  const {data: session} = useSession();
+
+  console.log(session);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -118,6 +123,18 @@ export default function Signup() {
             </div>
           )}
         </form>
+        <div className="mt-6 flex flex-col gap-6">
+          <Button
+            type="primary"
+            onClick={() => signIn("google")}
+            text="Sign in with Google"
+          />
+          <Button
+            type="secondary"
+            onClick={() => signOut()}
+            text="Logout"
+          />
+        </div>
         <p className="mt-2">
           Already have an account?{" "}
           <Link href="/login" className="text-primary">
