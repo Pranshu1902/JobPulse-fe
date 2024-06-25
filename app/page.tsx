@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
-import { useCookies } from "next-client-cookies";
-import { Job, User } from "@models/models";
+import { Job } from "@models/models";
 import Link from "next/link";
 import Button from "@components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,10 +14,10 @@ import {
 import Filter from "@/components/Filter";
 import { JOB_STATUSES } from "./constants/constants";
 import Loader from "@components/Loader";
+import { useAuth } from "@context/AuthContext";
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);
-  const cookies = useCookies();
   const [filteredJobList, setFilteredJobList] = useState({
     Applied: [],
     Offered: [],
@@ -26,13 +25,7 @@ export default function Home() {
     Withdrawn: [],
     Accepted: [],
   });
-  const [user, setUser] = useState<User>({
-    id: 0,
-    username: "",
-    email: "",
-    first_name: "",
-    last_name: "",
-  });
+  const { user, getToken, isLoading } = useAuth();
   const [filter, setFilter] = useState<string[]>([]);
   const [loading, setLoading] = useState(true); // State to manage loading status
 
@@ -65,7 +58,7 @@ export default function Home() {
   const fetchData = async () => {
     try {
       setLoading(true); // Set loading to true when fetching starts
-      const response = await request("GET", {}, "jobs/", cookies.get("token"));
+      const response = await request("GET", {}, "jobs/", getToken());
       setJobs(response);
 
       // Sort by status
@@ -96,23 +89,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (!isLoading) {
+      fetchData();
+    }
     document.title = `Home | JobPulse`;
-  }, []);
-
-  const fetchUserData = async () => {
-    const response = await request(
-      "GET",
-      {},
-      "/current-user/",
-      cookies.get("token")
-    );
-    setUser(response);
-  };
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  }, [isLoading]);
 
   return (
     <div className="p-4">
@@ -157,13 +138,21 @@ export default function Home() {
               <FontAwesomeIcon icon={faFilter} className="mr-2" /> Filter
             </Filter>
           </div>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {jobs
-              ?.filter(
-                (job: Job) =>
-                  filter.length === 0 || filter.includes(job.status.status)
-              )
-              .map((job: Job) => showJobCard(job))}
+          <div>
+            {jobs && jobs.length ? (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                {jobs
+                  ?.filter(
+                    (job: Job) =>
+                      filter.length === 0 || filter.includes(job.status.status)
+                  )
+                  .map((job: Job) => showJobCard(job))}
+              </div>
+            ) : (
+              <div className="flex mt-6 justify-center bg-lightgray p-3 rounded-lg shadow">
+                No Jobs Yet
+              </div>
+            )}
           </div>
         </>
       )}
