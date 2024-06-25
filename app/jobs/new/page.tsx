@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import { request } from "@/app/api/fetch";
-import { useCookies } from "next-client-cookies";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
 import { useAuth } from "@context/AuthContext";
