@@ -8,6 +8,8 @@ import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { AuthUser } from "@/models/models";
 
 const Loader = () => (
   <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
@@ -18,15 +20,10 @@ const Loader = () => (
 export default function Profile() {
   const router = useRouter();
   const cookies = useCookies();
-  const [user, setUser] = useState({
-    id: 0,
-    email: "",
-    username: "",
-    first_name: "",
-    last_name: "",
-  });
+  const { user, getToken, isLoading, refetch } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false); // State to manage loading status
+  const [userData, setUserData] = useState<AuthUser | null>();
 
   const disabledEditMode = () => {
     setEditMode(false);
@@ -34,6 +31,11 @@ export default function Profile() {
 
   const enableEditMode = () => {
     setEditMode(true);
+  };
+
+  const cancel = () => {
+    disabledEditMode();
+    setUserData(user);
   };
 
   const logout = () => {
@@ -45,43 +47,43 @@ export default function Profile() {
     setLoading(true); // Set loading to true when updating profile
 
     const data = {
-      username: user.username,
-      email: user.email,
-      first_name: user.first_name,
-      last_name: user.last_name,
+      username: userData?.username ?? "",
+      email: userData?.email ?? "",
+      first_name: userData?.first_name ?? "",
+      last_name: userData?.last_name ?? "",
     };
     const response = await request(
       "PUT",
       data,
-      `/users/${user.id}/`,
-      cookies.get("token")
+      `/users/${user?.id}/`,
+      getToken()
     );
 
     if (response?.id) {
       NotificationManager.success("Profile updated successfully", "Success");
-      fetchUserData(); // Refresh user data after update
+      refetch(); // Refresh user data after
       disabledEditMode();
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+      setUserData(user); // reset the data
     }
 
     setLoading(false); // Reset loading state after request completes
   };
 
-  const fetchUserData = async () => {
-    const response = await request(
-      "GET",
-      {},
-      "/current-user/",
-      cookies.get("token")
-    );
-    setUser(response);
-  };
-
   useEffect(() => {
-    fetchUserData();
     document.title = "Profile | JobPulse";
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      setUserData(user);
+    }
+  }, [user, refetch]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4">
@@ -92,8 +94,8 @@ export default function Profile() {
           id="outlined-basic"
           label="First Name"
           variant="outlined"
-          value={user.first_name}
-          onChange={(e) => setUser({ ...user, first_name: e.target.value })}
+          value={userData?.first_name}
+          onChange={(e) => setUserData({ ...user, first_name: e.target.value })}
           disabled={!editMode}
         />
         <TextField
@@ -101,8 +103,8 @@ export default function Profile() {
           id="outlined-basic"
           label="Last Name"
           variant="outlined"
-          value={user.last_name}
-          onChange={(e) => setUser({ ...user, last_name: e.target.value })}
+          value={userData?.last_name}
+          onChange={(e) => setUserData({ ...user, last_name: e.target.value })}
           disabled={!editMode}
         />
         <TextField
@@ -110,8 +112,8 @@ export default function Profile() {
           id="outlined-basic"
           label="Username"
           variant="outlined"
-          value={user.username}
-          onChange={(e) => setUser({ ...user, username: e.target.value })}
+          value={userData?.username}
+          onChange={(e) => setUserData({ ...user, username: e.target.value })}
           disabled={!editMode}
         />
         <TextField
@@ -119,15 +121,15 @@ export default function Profile() {
           id="outlined-basic"
           label="Email"
           variant="outlined"
-          value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
+          value={userData?.email}
+          onChange={(e) => setUserData({ ...user, email: e.target.value })}
           disabled={!editMode}
         />
       </div>
       <div className="mt-6">
         {editMode ? (
           <div className="flex items-center gap-4">
-            <Button type="cancel" text="Cancel" onClick={disabledEditMode} />
+            <Button type="cancel" text="Cancel" onClick={cancel} />
             <Button type="primary" text="Save" onClick={updateUserDetails} />
           </div>
         ) : (
