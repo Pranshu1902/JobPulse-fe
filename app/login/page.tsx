@@ -6,13 +6,14 @@ import logo from "@assets/logo_white.png";
 import { loginData } from "@models/types";
 import Link from "next/link";
 import { useCookies } from "next-client-cookies";
-import { request } from "@/app/api/fetch";
+import { request } from "@api/fetch";
 import { useRouter } from "next/navigation";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { TextField } from "@mui/material";
-import Button from "@/components/Button";
-import Loader from "@/components/Loader"; // Assuming Loader component is defined
+import Button from "@components/Button";
+import Loader from "@components/Loader"; // Assuming Loader component is defined
+import { useAuth } from "@context/AuthContext";
 
 const initialLoginData: loginData = {
   username: "",
@@ -24,6 +25,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false); // State to manage loading status
   const cookies = useCookies();
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -50,11 +52,11 @@ export default function Login() {
 
   // Redirect to home page if token already exists
   useEffect(() => {
-    if (cookies.get("token")) {
+    if (isAuthenticated()) {
       router.push("/");
     }
     document.title = "Login | JobPulse";
-  }, [cookies, router]);
+  }, [router, isAuthenticated]);
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -62,11 +64,14 @@ export default function Login() {
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full bg-primary">
         <Image src={logo} alt="logo" className="w-2/3 md:w-1/3" />
       </div>
-      
+
       {/* Right side with login form */}
       <div className="md:w-1/2 flex flex-col justify-center items-center h-full">
         <p className="text-3xl font-bold">Login</p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-4 w-[300px]">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 mt-4 w-[300px]"
+        >
           <TextField
             className="w-full"
             id="outlined-basic"
