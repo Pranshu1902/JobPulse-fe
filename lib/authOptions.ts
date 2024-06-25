@@ -1,7 +1,27 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, User, Session } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import axios from "axios";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
+
+interface ExtendedUser extends User {
+  id: string;
+  username: string;
+  authToken?: string;
+  first_name: string;
+  last_name: string;
+}
+
+interface ExtendedJWT extends JWT {
+  id: string;
+  username: string;
+  authToken?: string;
+  first_name: string;
+  last_name: string;
+}
+
+interface ExtendedSession extends Session {
+  user: ExtendedUser;
+}
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -12,67 +32,64 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: {},
-        password: {},
-      },
-      async authorize(credentials, req) {
-        try {
-          const response = await axios.post('http://localhost:8000/api/auth/login', {
-            email: credentials?.email,
-            password: credentials?.password,
-          });
-
-          const user = response.data;
-
-          if (user) {
-            // If login is successful and the user is returned
-            return {
-              id: user.id,
-              email: user.email,
-              name: user.name, // Assuming your backend returns the user's name
-            };
-          } else {
-            return null;
-          }
-        } catch (error) {
-          console.error("Error during authentication", error);
-          return null;
-        }
-        // const client = await clientPromise;
-        // const db = client.db() as any;
-
-        // const user = await db
-        //   .collection("users")
-        //   .findOne({ email: credentials?.email });
-
-        // const bcrypt = require("bcrypt");
-
-        // const passwordCorrect = await bcrypt.compare(
-        //   credentials?.password,
-        //   user?.password
-        // );
-
-        // if (passwordCorrect) {
-        //   return {
-        //     id: user?._id,
-        //     email: user?.email,
-        //   };
-        // }
-
-        // console.log("credentials", credentials);
-        return null;
-      },
-    }),
   ],
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/users/social_login/",
+          {
+            email: user.email,
+            username: user.email,
+            first_name: user.name,
+            last_name: "",
+          }
+        );
+
+        const backendUser = response.data;
+
+        console.log(backendUser);
+
+        (user as ExtendedUser).authToken = backendUser.token;
+        (user as ExtendedUser).id = backendUser.user.id;
+        (user as ExtendedUser).username = backendUser.user.username;
+        user.email = backendUser.user.email;
+        (user as ExtendedUser).first_name = backendUser.user.first_name;
+        (user as ExtendedUser).last_name = backendUser.user.last_name;
+        user.name =
+          backendUser.user.first_name + " " + backendUser.user.last_name;
+        return true;
+      } catch (error) {
+        console.error("Error during sign in", error);
+        return false;
+      }
+    },
     jwt: async ({ user, token, trigger, session }) => {
       if (trigger === "update") {
-        return { ...token, ...session.user };
+        return { ...token, ...session?.user };
       }
-      return { ...token, ...user };
+      if (user) {
+        token.id = (user as ExtendedUser).id;
+        token.username = (user as ExtendedUser).username;
+        token.email = user.email;
+        token.name = user.name;
+        token.first_name = (user as ExtendedUser).first_name;
+        token.last_name = (user as ExtendedUser).last_name;
+        token.authToken = (user as ExtendedUser).authToken;
+      }
+
+      return token;
+    },
+    session: async ({ session, token }) => {
+      const extendedSession = session as ExtendedSession;
+      extendedSession.user.id = (token as ExtendedJWT).id;
+      extendedSession.user.username = (token as ExtendedJWT).username;
+      extendedSession.user.email = token.email;
+      extendedSession.user.first_name = (token as ExtendedJWT).first_name;
+      extendedSession.user.last_name = (token as ExtendedJWT).last_name;
+      extendedSession.user.name = token.name;
+      extendedSession.user.authToken = (token as ExtendedJWT).authToken;
+      return extendedSession;
     },
   },
 };
