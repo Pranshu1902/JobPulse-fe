@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from "react";
 import { request } from "@api/fetch";
-import { useCookies } from "next-client-cookies";
 import { Job, JobStatus } from "@/models/models";
 import Link from "next/link";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,6 @@ import { JOB_STATUSES } from "../constants/constants";
 import { useAuth } from "@context/AuthContext";
 
 export default function Jobs() {
-  const cookies = useCookies();
   const [filteredJobList, setFilteredJobList] = useState<{
     [key: string]: Job[];
   }>({

@@ -9,7 +9,6 @@ import Dropdown from "@components/Dropdown";
 import { Job, JobStatus } from "@/models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCookies } from "next-client-cookies";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
@@ -26,7 +25,6 @@ const Loader = () => (
 export default function UpdateJobStatus() {
   const router = useRouter();
   const params = useParams();
-  const cookies = useCookies();
   const jobId = params.job_id;
   const [jobDetails, setJobDetails] = useState<Job>();
   const [status, setStatus] = useState<JobStatus>("Applied");

@@ -11,7 +11,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
-import { useCookies } from "next-client-cookies";
 import { Job, JobComment } from "@/models/models";
 import Modal from "@components/Modal";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
@@ -26,7 +25,6 @@ import { useAuth } from "@context/AuthContext";
 export default function JobDetail() {
   const router = useRouter();
   const params = useParams();
-  const cookies = useCookies();
   const jobId = params.job_id;
   const [jobDetails, setJobDetails] = useState<Job>();
   const [showStatusHistory, setShowStatusHistory] = useState(false);

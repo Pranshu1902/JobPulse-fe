@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useCookies } from "next-client-cookies";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,9 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Logo from "@components/Logo";
-import { useEffect, useState } from "react";
-import { request } from "@api/fetch";
-import { User } from "@models/models";
 import { useAuth } from "@context/AuthContext";
 
 export default function DashBoard({
@@ -22,7 +18,6 @@ export default function DashBoard({
 }: {
   onLinkClick: () => void;
 }) {
-  const cookies = useCookies();
   const pathname = usePathname();
   const router = useRouter();
   const { user, getToken, logOut } = useAuth();

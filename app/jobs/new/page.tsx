@@ -25,15 +25,11 @@ const initialJobData: JobCreateModel = {
 
 export default function NewJob() {
   const router = useRouter();
-  const cookies = useCookies();
   const [jobData, setJobData] = useState<JobCreateModel>(initialJobData);
   const { user, getToken } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(getToken());
-    console.log(user);
-
     const response = await request("POST", jobData, "/jobs/", getToken());
 
     if (response?.id) {
