@@ -36,19 +36,28 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       try {
+        const fullName = user.name?.split(" ") ?? [];
+        let first_name = "",
+          last_name = "";
+        if (fullName?.length > 1) {
+          first_name = fullName[0];
+          last_name = fullName.slice(1).join(" ");
+        } else {
+          first_name = user.name ?? "";
+          last_name = "";
+        }
+
         const response = await axios.post(
           "http://localhost:8000/users/social_login/",
           {
             email: user.email,
             username: user.email,
-            first_name: user.name,
-            last_name: "",
+            first_name: first_name,
+            last_name: last_name,
           }
         );
 
         const backendUser = response.data;
-
-        console.log(backendUser);
 
         (user as ExtendedUser).authToken = backendUser.token;
         (user as ExtendedUser).id = backendUser.user.id;
