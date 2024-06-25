@@ -36,7 +36,7 @@ export default function StatusTimeline(props: StatusTimelineProps) {
             variant="body2"
             color="text.secondary"
           >
-            {status.date_posted}
+            {new Date(status.date_posted).toLocaleString()}
           </TimelineOppositeContent>
           <TimelineSeparator sx={{ color: primaryColor }}>
             <TimelineConnector />
