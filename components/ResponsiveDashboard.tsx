@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
-import { useCookies } from "next-client-cookies";
+import { usePathname, useRouter } from "next/navigation";
 import Breadcrumbs from "@components/Breadcrumbs";
 import DashBoard from "@components/DashBoard";
 import LandingPage from "@components/LandingPage";
+import { useAuth } from "@context/AuthContext";
 
 export default function ResponsiveDashboard({
   children,
@@ -14,15 +14,19 @@ export default function ResponsiveDashboard({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
-  const cookies = useCookies();
+  const { isAuthenticated, isLoading } = useAuth();
   const dashboardRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (dashboardRef.current && !dashboardRef.current.contains(event.target as Node)) {
+    if (
+      dashboardRef.current &&
+      !dashboardRef.current.contains(event.target as Node)
+    ) {
       setMenuOpen(false);
     }
   };
@@ -43,8 +47,14 @@ export default function ResponsiveDashboard({
 
   if (pathname == "/login" || pathname == "/signup") {
     return <>{children}</>;
-  } else if (pathname == "/" && !cookies.get("token")) {
-    return <LandingPage />;
+  } else if (pathname == "/") {
+    if (!isAuthenticated()) {
+      return <LandingPage />;
+    }
+  } else {
+    if (!isLoading && !isAuthenticated()) {
+      router.push("/login");
+    }
   }
 
   return (
@@ -58,8 +68,16 @@ export default function ResponsiveDashboard({
       >
         <DashBoard onLinkClick={() => setMenuOpen(false)} />
       </div>
-      <div className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"} md:hidden z-10`} />
-      <div className={`mt-12 md:mt-0 ml-0 md:ml-[16.6667%] w-full md:w-[83.3333%] overflow-scroll ${menuOpen ? "filter blur-sm" : ""}`}>
+      <div
+        className={`fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 ${
+          menuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        } md:hidden z-10`}
+      />
+      <div
+        className={`mt-12 md:mt-0 ml-0 md:ml-[16.6667%] w-full md:w-[83.3333%] overflow-scroll ${
+          menuOpen ? "filter blur-sm" : ""
+        }`}
+      >
         {children}
       </div>
     </div>
