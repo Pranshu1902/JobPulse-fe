@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "@/components/Button";
 import Loader from "@components/Loader";
 import { JOB_STATUSES } from "../constants/constants";
+import { useAuth } from "@context/AuthContext";
 
 export default function Jobs() {
   const cookies = useCookies();
@@ -23,6 +24,7 @@ export default function Jobs() {
     Accepted: [],
   });
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { isLoading, getToken } = useAuth();
   const [loading, setLoading] = useState(true);
 
   const showBoardColumn = (status: JobStatus) => {
@@ -71,7 +73,7 @@ export default function Jobs() {
   const fetchData = async () => {
     try {
       setLoading(true); // Set loading to true when fetching starts
-      const response = await request("GET", {}, "jobs/", cookies.get("token"));
+      const response = await request("GET", {}, "jobs/", getToken());
 
       // sort by status
       const organizedJobs = response.reduce(
@@ -101,9 +103,11 @@ export default function Jobs() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (!isLoading) {
+      fetchData();
+    }
     document.title = "Jobs | JobPulse";
-  }, []);
+  }, [isLoading]);
 
   const scrollLeft = () => {
     if (scrollRef.current) {
@@ -124,7 +128,7 @@ export default function Jobs() {
       ) : (
         <>
           <div className="flex justify-between items-center mb-8">
-            <p className="text-3xl font-semibold">List Jobs</p>
+            <p className="text-3xl font-semibold">List Jobs {isLoading}</p>
             <Link href={"/jobs/new"}>
               <Button text="+ New" type="primary" />
             </Link>

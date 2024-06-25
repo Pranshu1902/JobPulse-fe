@@ -21,6 +21,7 @@ import StatusTimeline from "@/components/Timeline";
 import { TextField } from "@mui/material";
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
+import { useAuth } from "@context/AuthContext";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -32,6 +33,7 @@ export default function JobDetail() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true); // State to manage loading status
+  const { getToken } = useAuth();
 
   const displayStatusUpdatesRecord = () => {
     setShowStatusHistory(true);
@@ -59,7 +61,7 @@ export default function JobDetail() {
       "POST",
       data,
       `/jobs/${jobId}/comment/`,
-      cookies.get("token")
+      getToken()
     );
 
     if (response?.id) {
@@ -76,7 +78,7 @@ export default function JobDetail() {
       "DELETE",
       {},
       `/jobs/${jobId}`,
-      cookies.get("token")
+      getToken()
     );
 
     if (response) {
@@ -105,7 +107,7 @@ export default function JobDetail() {
         "GET",
         {},
         `/jobs/${jobId}`,
-        cookies.get("token")
+        getToken()
       );
       setJobDetails(response);
     } catch (error) {

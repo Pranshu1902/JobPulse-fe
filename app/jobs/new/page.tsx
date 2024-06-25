@@ -11,6 +11,7 @@ import { request } from "@/app/api/fetch";
 import { useCookies } from "next-client-cookies";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
+import { useAuth } from "@context/AuthContext";
 
 const initialJobData: JobCreateModel = {
   role: "",
@@ -26,16 +27,14 @@ export default function NewJob() {
   const router = useRouter();
   const cookies = useCookies();
   const [jobData, setJobData] = useState<JobCreateModel>(initialJobData);
+  const { user, getToken } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    console.log(getToken());
+    console.log(user);
 
-    const response = await request(
-      "POST",
-      jobData,
-      "/jobs/",
-      cookies.get("token")
-    );
+    const response = await request("POST", jobData, "/jobs/", getToken());
 
     if (response?.id) {
       NotificationManager.success("Job posted successfully", "Success");

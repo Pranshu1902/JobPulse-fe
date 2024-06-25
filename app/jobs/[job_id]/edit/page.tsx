@@ -11,6 +11,7 @@ import { request } from "@/app/api/fetch";
 import { useCookies } from "next-client-cookies";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
+import { useAuth } from "@context/AuthContext";
 
 export default function EditJob() {
   const params = useParams();
@@ -26,6 +27,7 @@ export default function EditJob() {
     platform: "",
     salary: "",
   });
+  const {getToken} = useAuth()
 
   const fetchData = async () => {
     try {
@@ -33,7 +35,7 @@ export default function EditJob() {
         "GET",
         {},
         `/jobs/${jobId}/`,
-        cookies.get("token")
+        getToken()
       );
       setJobData(response);
     } catch (error) {
@@ -58,7 +60,7 @@ export default function EditJob() {
         "PUT",
         jobData,
         `/jobs/${jobId}/`,
-        cookies.get("token")
+        getToken()
       );
 
       if (response?.id) {
