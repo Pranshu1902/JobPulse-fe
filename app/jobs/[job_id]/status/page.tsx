@@ -14,7 +14,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { NotificationManager } from "react-notifications";
-import Button from "@/components/Button";
+import Button from "@components/Button";
+import { useAuth } from "@context/AuthContext";
 
 const Loader = () => (
   <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
@@ -31,6 +32,7 @@ export default function UpdateJobStatus() {
   const [status, setStatus] = useState<JobStatus>("Applied");
   const [updateText, setUpdateText] = useState("");
   const [loading, setLoading] = useState(false); // State to manage loading status
+  const {getToken} = useAuth();
 
   const fetchData = async () => {
     setLoading(true); // Set loading to true while fetching data
@@ -38,7 +40,7 @@ export default function UpdateJobStatus() {
       "GET",
       {},
       `/jobs/${jobId}/`,
-      cookies.get("token")
+      getToken()
     );
     setJobDetails(response);
     setStatus(response.status.status);
@@ -54,7 +56,7 @@ export default function UpdateJobStatus() {
       "POST",
       data,
       `/jobs/${jobId}/update_status/`,
-      cookies.get("token")
+      getToken()
     );
 
     if (response?.id) {
