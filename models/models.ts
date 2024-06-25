@@ -67,10 +67,11 @@ export type User = {
 };
 
 export type AuthUser = {
-  id?: number;
+  id?: number | string;
   email?: string;
   username?: string;
   first_name?: string;
   last_name?: string;
   token?: string;
+  image?: string;
 };
