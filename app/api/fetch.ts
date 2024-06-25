@@ -1,5 +1,4 @@
-// const baseURL = "https://jobpulse.com/";
-const baseURL = "http://127.0.0.1:8000/";
+import { backendBaseURL } from "@constants/constants";
 
 type methods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
@@ -19,10 +18,10 @@ export async function request(
           .map((key) => `${key}=${data[key]}`)
           .join("&")}`
       : "";
-    url = `${baseURL}${endpoint}${requestParams}`;
+    url = `${backendBaseURL}${endpoint}${requestParams}`;
     payload = "";
   } else {
-    url = `${baseURL}${endpoint}`;
+    url = `${backendBaseURL}${endpoint}`;
     payload = data ? JSON.stringify(data) : "";
   }
 

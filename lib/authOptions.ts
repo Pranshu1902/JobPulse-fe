@@ -2,6 +2,7 @@ import { NextAuthOptions, User, Session } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import axios from "axios";
 import GoogleProvider from "next-auth/providers/google";
+import { backendBaseURL } from "@constants/constants";
 
 interface ExtendedUser extends User {
   id: string;
@@ -48,7 +49,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const response = await axios.post(
-          "http://localhost:8000/users/social_login/",
+          `${backendBaseURL}users/social_login/`,
           {
             email: user.email,
             username: user.email,

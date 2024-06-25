@@ -10,3 +10,5 @@ export const JOB_STATUSES: JobStatus[] = [
   "Accepted",
   "Withdrawn",
 ];
+
+export const backendBaseURL = "http://127.0.0.1:8000/";
