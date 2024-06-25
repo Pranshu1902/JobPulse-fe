@@ -31,7 +31,7 @@ export default function JobDetail() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true); // State to manage loading status
-  const { getToken } = useAuth();
+  const { getToken, isLoading } = useAuth();
 
   const displayStatusUpdatesRecord = () => {
     setShowStatusHistory(true);
@@ -118,7 +118,7 @@ export default function JobDetail() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     document.title = `${jobDetails?.role} | JobPulse`;

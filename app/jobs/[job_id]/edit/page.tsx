@@ -25,7 +25,7 @@ export default function EditJob() {
     platform: "",
     salary: "",
   });
-  const {getToken} = useAuth()
+  const {getToken, isLoading} = useAuth()
 
   const fetchData = async () => {
     try {
@@ -44,7 +44,7 @@ export default function EditJob() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     document.title = `Edit Job | ${jobData?.role} | JobPulse`;
@@ -98,7 +98,7 @@ export default function EditJob() {
             id="outlined-basic"
             label="Company"
             variant="outlined"
-            value={jobData.company.name}
+            value={jobData.company?.name}
             disabled
           />
           <TextField
