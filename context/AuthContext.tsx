@@ -5,6 +5,7 @@ import { AuthUser } from "@models/models";
 import { useCookies } from "next-client-cookies";
 import { request } from "@api/fetch";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface AuthContextType {
   user: AuthUser | null;
@@ -24,6 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const { data: session } = useSession();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter()
 
   const fetchUser = async () => {
     setLoading(true);
@@ -72,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       cookies.remove("token");
     }
     signOut();
+    router.push("/login");
   };
 
   return (

@@ -1,6 +1,5 @@
 "use client";
 
-import { useCookies } from "next-client-cookies";
 import { request } from "@api/fetch";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
@@ -19,8 +18,7 @@ const Loader = () => (
 
 export default function Profile() {
   const router = useRouter();
-  const cookies = useCookies();
-  const { user, getToken, isLoading, refetch } = useAuth();
+  const { user, getToken, isLoading, refetch, logOut } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false); // State to manage loading status
   const [userData, setUserData] = useState<AuthUser | null>();
@@ -36,11 +34,6 @@ export default function Profile() {
   const cancel = () => {
     disabledEditMode();
     setUserData(user);
-  };
-
-  const logout = () => {
-    cookies.remove("token");
-    router.push("/login");
   };
 
   const updateUserDetails = async () => {
@@ -135,7 +128,7 @@ export default function Profile() {
         ) : (
           <div className="flex items-center gap-4">
             <Button type="primary" text="Edit" onClick={enableEditMode} />
-            <Button type="delete" text="Sign out" onClick={logout} />
+            <Button type="delete" text="Sign out" onClick={logOut} />
           </div>
         )}
       </div>
