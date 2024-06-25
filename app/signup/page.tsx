@@ -6,14 +6,15 @@ import logo from "@assets/logo_white.png";
 import { signupData } from "@models/types";
 import Link from "next/link";
 import { useCookies } from "next-client-cookies";
-import { request } from "@/app/api/fetch";
+import { request } from "@api/fetch";
 import { useRouter } from "next/navigation";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { TextField } from "@mui/material";
-import Button from "@/components/Button";
-import Loader from "@/components/Loader"; // Assuming Loader component is defined
-import { signIn, signOut, useSession } from "next-auth/react";
+import Button from "@components/Button";
+import Loader from "@components/Loader"; // Assuming Loader component is defined
+import { signIn, signOut } from "next-auth/react";
+import { useAuth } from "@context/AuthContext";
 
 const initialSignupData: signupData = {
   username: "",
@@ -26,10 +27,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false); // State to manage loading status
   const cookies = useCookies();
   const router = useRouter();
-
-  const {data: session} = useSession();
-
-  console.log(session);
+  const { isAuthenticated } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -69,11 +67,11 @@ export default function Signup() {
 
   // Redirect to home page if token already exists
   useEffect(() => {
-    if (cookies.get("token")) {
+    if (isAuthenticated()) {
       router.push("/");
     }
     document.title = "Signup | JobPulse";
-  }, [cookies, router]);
+  }, [router, isAuthenticated]);
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
@@ -129,11 +127,7 @@ export default function Signup() {
             onClick={() => signIn("google")}
             text="Sign in with Google"
           />
-          <Button
-            type="secondary"
-            onClick={() => signOut()}
-            text="Logout"
-          />
+          <Button type="secondary" onClick={() => signOut()} text="Logout" />
         </div>
         <p className="mt-2">
           Already have an account?{" "}
