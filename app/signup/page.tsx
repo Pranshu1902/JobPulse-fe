@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import logo from "@assets/logo_white.png";
+import google from "@assets/google.png";
 import { signupData } from "@models/types";
 import Link from "next/link";
 import { useCookies } from "next-client-cookies";
@@ -122,12 +123,9 @@ export default function Signup() {
           )}
         </form>
         <div className="mt-6 flex flex-col gap-6">
-          <Button
-            type="primary"
-            onClick={() => signIn("google")}
-            text="Sign in with Google"
-          />
-          <Button type="secondary" onClick={() => signOut()} text="Logout" />
+          <Button type="secondary" onClick={() => signIn("google")}>
+            <Image width={30} src={google} alt="Google" /> Sign up with Google
+          </Button>
         </div>
         <p className="mt-2">
           Already have an account?{" "}

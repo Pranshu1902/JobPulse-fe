@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 interface ButtonProps {
   type: ButtonTypes;
   buttonType?: "submit" | "reset" | "button" | undefined;
-  text: string;
+  text?: string;
   onClick?: (e: any) => void;
   icon?: any;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export default function Button(props: ButtonProps) {
@@ -17,7 +18,7 @@ export default function Button(props: ButtonProps) {
         props.type === "primary"
           ? "bg-primary text-white"
           : props.type === "secondary"
-          ? "bg-white"
+          ? "bg-white border border-primary"
           : props.type === "delete"
           ? "bg-red-500 text-white"
           : props.type === "cancel"
@@ -30,7 +31,7 @@ export default function Button(props: ButtonProps) {
       type={props?.buttonType}
     >
       <FontAwesomeIcon icon={props?.icon} />
-      {props.text}
+      {props.text} {props.children}
     </button>
   );
 }

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import logo from "@assets/logo_white.png";
+import google from "@assets/google.png";
 import { loginData } from "@models/types";
 import Link from "next/link";
 import { useCookies } from "next-client-cookies";
@@ -14,6 +15,7 @@ import { TextField } from "@mui/material";
 import Button from "@components/Button";
 import Loader from "@components/Loader"; // Assuming Loader component is defined
 import { useAuth } from "@context/AuthContext";
+import { signIn } from "next-auth/react";
 
 const initialLoginData: loginData = {
   username: "",
@@ -98,7 +100,11 @@ export default function Login() {
             </div>
           )}
         </form>
-
+        <div className="mt-6 flex flex-col gap-6">
+          <Button type="secondary" onClick={() => signIn("google")}>
+            <Image width={30} src={google} alt="Google" /> Login with Google
+          </Button>
+        </div>
         <p className="mt-2">
           New User?{" "}
           <Link href="/signup" className="text-primary">
