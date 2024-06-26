@@ -25,45 +25,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const cookies = useCookies();
   const { data: session } = useSession();
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   const fetchUser = async () => {
-    setLoading(true);
+    try {
+      setIsLoading(true);
 
-    // token stored in cookies
-    if (cookies.get("token")) {
-      const token = cookies.get("token");
-      const response = await request("GET", {}, "/current-user/", token);
-      setUser({ ...response, token });
-    }
+      // token stored in cookies
+      if (cookies.get("token")) {
+        const token = cookies.get("token");
+        const response = await request("GET", {}, "/current-user/", token);
+        setUser({ ...response, token });
+      }
 
-    // user logged in through social media
-    else if (session && session.user) {
-      setUser({
-        id: (session.user as any).id,
-        first_name: (session.user as any).first_name ?? "",
-        last_name: (session.user as any).last_name ?? "",
-        image: session.user.image ?? "",
-        username: (session.user as any).username,
-        email: session.user.email ?? "",
-        token: (session.user as any).authToken,
-      });
-    }
+      // user logged in through social media
+      else if (session && session.user && (session.user as any).authToken) {
+        const response = await request(
+          "GET",
+          {},
+          "/current-user/",
+          (session.user as any).authToken
+        );
+        setUser({ ...response, token: (session.user as any).authToken });
+      }
 
-    // if no token found then set to null
-    else {
+      // if no token found then set to null
+      else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user:", error);
       setUser(null);
+    } finally {
+      setIsLoading(false);
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
     if (!user && (cookies.get("token") || session?.user)) {
       fetchUser();
     } else {
-      setLoading(false);
+      setIsLoading(false);
     }
   }, [cookies, user, session]);
 
@@ -72,8 +75,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const isAuthenticated = () => !!user;
 
   const refetch = async () => {
-    const response = await request("GET", {}, "/current-user/", user?.token);
-    setUser({ ...response, token: user?.token });
+    setIsLoading(true);
+    try {
+      const response = await request("GET", {}, "/current-user/", user?.token);
+      setUser({ ...response, token: user?.token });
+    } catch (error) {
+      console.error("Failed to refetch user:", error);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logOut = () => {
@@ -82,7 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     signOut();
     setUser(null);
-    router.push("/login");
+    router.replace("/login");
   };
 
   return (
@@ -92,7 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         getToken,
         isAuthenticated,
         logOut,
-        isLoading: loading,
+        isLoading,
         fetchUser,
         refetch,
       }}

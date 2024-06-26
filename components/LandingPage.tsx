@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import jobs from "@assets/home/jobs.png";
 import job_detail from "@assets/home/job_detail.png";
@@ -7,8 +9,16 @@ import Button from "@components/Button";
 import Logo from "@components/Logo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "@context/AuthContext";
+import Loader from "@components/Loader";
 
 export default function LandingPage() {
+  const { isLoading, isAuthenticated } = useAuth();
+
+  if (isLoading || (!isLoading && isAuthenticated())) {
+    return <Loader />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}

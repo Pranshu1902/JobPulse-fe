@@ -18,6 +18,7 @@ export default function ResponsiveDashboard({
   const { isAuthenticated, isLoading } = useAuth();
   const dashboardRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const [initialCheckCompleted, setInitialCheckCompleted] = useState(false);
 
   const handleMenuClick = () => {
     setMenuOpen(!menuOpen);
@@ -47,18 +48,23 @@ export default function ResponsiveDashboard({
   }, [menuOpen]);
 
   useEffect(() => {
-    if (
-      !isLoading &&
-      !isAuthenticated() &&
-      pathname !== "/" &&
-      pathname !== "/login" &&
-      pathname !== "/signup"
-    ) {
-      router.push("/login");
-    }
+    const timeoutId = setTimeout(() => {
+      if (!isLoading && !isAuthenticated()) {
+        if (
+          pathname !== "/" &&
+          pathname !== "/login" &&
+          pathname !== "/signup"
+        ) {
+          router.replace("/login");
+        }
+      }
+      setInitialCheckCompleted(true);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
   }, [isLoading, isAuthenticated, pathname, router]);
 
-  if (isLoading) {
+  if (isLoading || !initialCheckCompleted) {
     return <Loader />;
   }
 
@@ -67,8 +73,6 @@ export default function ResponsiveDashboard({
   }
 
   if (pathname === "/" && !isLoading && !isAuthenticated()) {
-    console.log(isAuthenticated());
-    console.log(isLoading);
     return <LandingPage />;
   }
 
