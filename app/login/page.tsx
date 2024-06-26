@@ -13,7 +13,7 @@ import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { TextField } from "@mui/material";
 import Button from "@components/Button";
-import Loader from "@components/Loader"; // Assuming Loader component is defined
+import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
 import { signIn } from "next-auth/react";
 
@@ -41,7 +41,7 @@ export default function Login() {
         cookies.set("token", response["token"]);
         fetchUser();
         NotificationManager.success("Logged in successfully", "Success");
-        router.push("/");
+        router.replace("/");
       } else {
         NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
       }
@@ -56,12 +56,12 @@ export default function Login() {
   // Redirect to home page if token already exists
   useEffect(() => {
     if (!isLoading && isAuthenticated()) {
-      router.push("/");
+      router.replace("/");
     }
     document.title = "Login | JobPulse";
   }, [router, isAuthenticated, isLoading]);
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loader />;
   }
 
@@ -97,13 +97,6 @@ export default function Login() {
             onChange={(e) => setData({ ...data, password: e.target.value })}
           />
           <Button type="primary" text="Login" />
-
-          {/* Loader displayed conditionally based on 'loading' state */}
-          {loading && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-              <Loader />
-            </div>
-          )}
         </form>
         <div className="mt-6 flex flex-col gap-6">
           <Button type="secondary" onClick={() => signIn("google")}>

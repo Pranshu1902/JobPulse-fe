@@ -54,7 +54,7 @@ export default function Signup() {
         if (loginResponse && loginResponse["token"]) {
           cookies.set("token", loginResponse["token"]);
           fetchUser();
-          router.push("/");
+          router.replace("/");
         }
       } else {
         NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
@@ -70,7 +70,7 @@ export default function Signup() {
   // Redirect to home page if token already exists
   useEffect(() => {
     if (!isLoading && isAuthenticated()) {
-      router.push("/");
+      router.replace("/");
     }
     document.title = "Signup | JobPulse";
   }, [router, isAuthenticated, isLoading]);

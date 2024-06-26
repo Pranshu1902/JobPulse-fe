@@ -33,7 +33,7 @@ export default function NewJob() {
 
     if (response?.id) {
       NotificationManager.success("Job posted successfully", "Success");
-      router.push("/jobs");
+      router.replace("/jobs");
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }

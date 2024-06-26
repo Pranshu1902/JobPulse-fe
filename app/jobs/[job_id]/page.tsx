@@ -81,7 +81,7 @@ export default function JobDetail() {
 
     if (response) {
       NotificationManager.success("Job deleted successfully", "Success");
-      router.push("/jobs");
+      router.replace("/jobs");
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }

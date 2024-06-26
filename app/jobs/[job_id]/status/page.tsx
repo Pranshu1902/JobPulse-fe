@@ -59,7 +59,7 @@ export default function UpdateJobStatus() {
 
     if (response?.id) {
       NotificationManager.success("Status updated successfully", "Success");
-      router.push(`/jobs/${jobId}`);
+      router.replace(`/jobs/${jobId}`);
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }

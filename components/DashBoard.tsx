@@ -49,7 +49,7 @@ export default function DashBoard({
 
   const logout = () => {
     logOut();
-    router.push("/login");
+    router.replace("/login");
     onLinkClick();
   };
 
