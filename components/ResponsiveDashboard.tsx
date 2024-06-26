@@ -6,6 +6,7 @@ import Breadcrumbs from "@components/Breadcrumbs";
 import DashBoard from "@components/DashBoard";
 import LandingPage from "@components/LandingPage";
 import { useAuth } from "@context/AuthContext";
+import Loader from "@components/Loader";
 
 export default function ResponsiveDashboard({
   children,
@@ -45,6 +46,9 @@ export default function ResponsiveDashboard({
     };
   }, [menuOpen]);
 
+  if (isLoading) {
+    return <Loader />;
+  }
   if (pathname == "/login" || pathname == "/signup") {
     return <>{children}</>;
   } else if (pathname == "/") {
