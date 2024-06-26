@@ -65,7 +65,7 @@ export default function DashBoard({
               href={tab.route}
               onClick={onLinkClick}
               className={`${
-                activeTab === tab.tabIndex && "bg-secondary"
+                activeTab === tab.tabIndex && "bg-secondary shadow"
               } p-4 rounded-lg text-xl hover:bg-secondary transition duration-200 w-full flex items-center gap-2`}
             >
               <FontAwesomeIcon icon={tab.icon} />
