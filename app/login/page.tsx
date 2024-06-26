@@ -27,7 +27,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false); // State to manage loading status
   const cookies = useCookies();
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading, fetchUser } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -39,6 +39,7 @@ export default function Login() {
 
       if (response && response["token"]) {
         cookies.set("token", response["token"]);
+        fetchUser();
         NotificationManager.success("Logged in successfully", "Success");
         router.push("/");
       } else {
@@ -54,11 +55,15 @@ export default function Login() {
 
   // Redirect to home page if token already exists
   useEffect(() => {
-    if (isAuthenticated()) {
+    if (!isLoading && isAuthenticated()) {
       router.push("/");
     }
     document.title = "Login | JobPulse";
-  }, [router, isAuthenticated]);
+  }, [router, isAuthenticated, isLoading]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex flex-col md:flex-row h-screen">

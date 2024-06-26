@@ -46,19 +46,30 @@ export default function ResponsiveDashboard({
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (
+      !isLoading &&
+      !isAuthenticated() &&
+      pathname !== "/" &&
+      pathname !== "/login" &&
+      pathname !== "/signup"
+    ) {
+      router.push("/login");
+    }
+  }, [isLoading, isAuthenticated, pathname, router]);
+
   if (isLoading) {
     return <Loader />;
   }
-  if (pathname == "/login" || pathname == "/signup") {
+
+  if (pathname === "/login" || pathname === "/signup") {
     return <>{children}</>;
-  } else if (pathname == "/") {
-    if (!isAuthenticated()) {
-      return <LandingPage />;
-    }
-  } else {
-    if (!isLoading && !isAuthenticated()) {
-      router.push("/login");
-    }
+  }
+
+  if (pathname === "/" && !isLoading && !isAuthenticated()) {
+    console.log(isAuthenticated());
+    console.log(isLoading);
+    return <LandingPage />;
   }
 
   return (

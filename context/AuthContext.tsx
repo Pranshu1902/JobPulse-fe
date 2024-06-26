@@ -13,6 +13,7 @@ interface AuthContextType {
   isAuthenticated: () => boolean;
   logOut: () => void;
   isLoading: boolean;
+  fetchUser: () => void;
   refetch: () => void;
 }
 
@@ -27,38 +28,38 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  const fetchUser = async () => {
+    setLoading(true);
+
+    // token stored in cookies
+    if (cookies.get("token")) {
+      const token = cookies.get("token");
+      const response = await request("GET", {}, "/current-user/", token);
+      setUser({ ...response, token });
+    }
+
+    // user logged in through social media
+    else if (session && session.user) {
+      setUser({
+        id: (session.user as any).id,
+        first_name: (session.user as any).first_name ?? "",
+        last_name: (session.user as any).last_name ?? "",
+        image: session.user.image ?? "",
+        username: (session.user as any).username,
+        email: session.user.email ?? "",
+        token: (session.user as any).authToken,
+      });
+    }
+
+    // if no token found then set to null
+    else {
+      setUser(null);
+    }
+
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchUser = async () => {
-      setLoading(true);
-
-      // token stored in cookies
-      if (cookies.get("token")) {
-        const token = cookies.get("token");
-        const response = await request("GET", {}, "/current-user/", token);
-        setUser({ ...response, token });
-      }
-
-      // user logged in through social media
-      else if (session && session.user) {
-        setUser({
-          id: (session.user as any).id,
-          first_name: (session.user as any).first_name ?? "",
-          last_name: (session.user as any).last_name ?? "",
-          image: session.user.image ?? "",
-          username: (session.user as any).username,
-          email: session.user.email ?? "",
-          token: (session.user as any).authToken,
-        });
-      }
-
-      // if no token found then set to null
-      else {
-        setUser(null);
-      }
-
-      setLoading(false);
-    };
-
     if (!user && (cookies.get("token") || session?.user)) {
       fetchUser();
     } else {
@@ -92,6 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         isAuthenticated,
         logOut,
         isLoading: loading,
+        fetchUser,
         refetch,
       }}
     >
