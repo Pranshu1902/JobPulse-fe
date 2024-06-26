@@ -74,6 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       cookies.remove("token");
     }
     signOut();
+    setUser(null);
     router.push("/login");
   };
 
