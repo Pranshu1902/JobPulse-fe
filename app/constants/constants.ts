@@ -11,4 +11,4 @@ export const JOB_STATUSES: JobStatus[] = [
   "Withdrawn",
 ];
 
-export const backendBaseURL = "http://127.0.0.1:8000/";
+export const backendBaseURL = "https://web-production-84a7.up.railway.app/";
