@@ -59,7 +59,7 @@ export default function Home() {
     const fetchData = async () => {
       try {
         setLoading(true); // Set loading to true when fetching starts
-        const response = await request("GET", {}, "jobs/", getToken());
+        const response = await request("GET", {}, "/jobs/", getToken());
         setJobs(response);
 
         // Sort by status

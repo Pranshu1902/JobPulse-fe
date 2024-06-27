@@ -71,7 +71,7 @@ export default function Jobs() {
   const fetchData = async () => {
     try {
       setLoading(true); // Set loading to true when fetching starts
-      const response = await request("GET", {}, "jobs/", getToken());
+      const response = await request("GET", {}, "/jobs/", getToken());
 
       // sort by status
       const organizedJobs = response.reduce(

@@ -35,7 +35,7 @@ export default function Login() {
 
     const datas = { username: data.username, password: data.password };
     try {
-      const response = await request("POST", datas, "api-token-auth/");
+      const response = await request("POST", datas, "/api-token-auth/");
 
       if (response && response["token"]) {
         cookies.set("token", response["token"]);

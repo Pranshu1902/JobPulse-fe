@@ -43,13 +43,13 @@ export default function Signup() {
     const datas = { username: data.username, password: data.password };
 
     try {
-      const response = await request("POST", datas, "users/");
+      const response = await request("POST", datas, "/users/");
 
       if (response && response.id) {
         NotificationManager.success("Account created successfully", "Success");
 
         // log in user
-        const loginResponse = await request("POST", datas, "api-token-auth/");
+        const loginResponse = await request("POST", datas, "/api-token-auth/");
 
         if (loginResponse && loginResponse["token"]) {
           cookies.set("token", loginResponse["token"]);
