@@ -38,6 +38,7 @@ export default function JobDetail() {
     id: "",
     newComment: "",
   });
+  const [commentsLoading, setCommentsLoading] = useState(false);
   const [loadingModal, setLoadingModal] = useState(false);
   const [addCommentLoading, setAddCommentLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
@@ -97,7 +98,7 @@ export default function JobDetail() {
     if (response?.id) {
       NotificationManager.success("Comment posted successfully", "Success");
       setNewComment("");
-      fetchData();
+      fetchComments();
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
@@ -113,9 +114,9 @@ export default function JobDetail() {
       getToken()
     );
 
-    if (response) {
+    if (response?.id) {
       NotificationManager.success("Comment updated successfully", "Success");
-      fetchData();
+      fetchComments();
       hideEditCommentModal();
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
@@ -147,7 +148,7 @@ export default function JobDetail() {
 
     if (response) {
       NotificationManager.success("Comment deleted successfully", "Success");
-      fetchData();
+      fetchComments();
       hideDeleteCommentModal();
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
@@ -188,6 +189,26 @@ export default function JobDetail() {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     } finally {
       setLoading(false); // Set loading to false when fetching completes
+    }
+  };
+
+  const fetchComments = async () => {
+    setCommentsLoading(true);
+    try {
+      const response = await request(
+        "GET",
+        {},
+        `/jobs/${jobId}/get_all_comments`,
+        getToken()
+      );
+      if (jobDetails) {
+        setJobDetails({ ...jobDetails, comments: response });
+      }
+    } catch (error) {
+      console.error("Error fetching job details:", error);
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    } finally {
+      setCommentsLoading(false); // Set loading to false when fetching completes
     }
   };
 
@@ -283,17 +304,23 @@ export default function JobDetail() {
             ></Button>
           )}
         </div>
-        <div className="flex flex-col gap-4 mt-6">
-          {jobDetails?.comments.length ?? 0 > 0 ? (
-            jobDetails?.comments.map((comment: JobComment) =>
-              showCommentBox(comment)
-            )
-          ) : (
-            <div className="bg-lightgray p-3 rounded-lg flex justify-center">
-              No Comments Found
-            </div>
-          )}
-        </div>
+        {commentsLoading ? (
+          <div className="flex justify-center mt-4">
+            <Loader />
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4 mt-6">
+            {jobDetails?.comments.length ?? 0 > 0 ? (
+              jobDetails?.comments.map((comment: JobComment) =>
+                showCommentBox(comment)
+              )
+            ) : (
+              <div className="bg-lightgray p-3 rounded-lg flex justify-center">
+                No Comments Found
+              </div>
+            )}
+          </div>
+        )}
       </div>
       <Modal open={showStatusHistory} setOpen={setShowStatusHistory}>
         <div className="flex flex-col gap-2 p-6">
