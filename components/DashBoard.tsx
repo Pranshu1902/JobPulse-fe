@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -19,8 +18,7 @@ export default function DashBoard({
   onLinkClick: () => void;
 }) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { user, getToken, logOut } = useAuth();
+  const { user, logOut } = useAuth();
 
   if (pathname == "/login" || pathname == "/signup") {
     return null;
@@ -49,7 +47,6 @@ export default function DashBoard({
 
   const logout = () => {
     logOut();
-    router.replace("/login");
     onLinkClick();
   };
 

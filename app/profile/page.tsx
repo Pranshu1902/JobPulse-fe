@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@context/AuthContext";
 import { AuthUser } from "@models/models";
 
@@ -16,7 +15,6 @@ const Loader = () => (
 );
 
 export default function Profile() {
-  const router = useRouter();
   const { user, getToken, isLoading, refetch, logOut } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false); // State to manage loading status
