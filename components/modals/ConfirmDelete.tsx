@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import Button from "@components/Button";
+import { CircularProgress } from "@mui/material";
 
 interface ConfirmDeleteProps {
   title: string;
   onSubmit: () => void;
   onCancel: () => void;
+  isLoading: boolean;
 }
 
 export default function ConfirmDelete(props: ConfirmDeleteProps) {
@@ -16,10 +18,21 @@ export default function ConfirmDelete(props: ConfirmDeleteProps) {
         <p>Delete {props.title}</p>
       </div>
       <p>Are you sure you want to delete?</p>
-      <div className="flex flex-col md:flex-row gap-2 justify-end mt-4">
-        <Button type="cancel" text="Cancel" onClick={props.onCancel} />
-        <Button type="delete" buttonType="submit" text="Delete" onClick={props.onSubmit} />
-      </div>
+      {props.isLoading ? (
+        <div className="mt-4 flex justify-center">
+          <CircularProgress color="secondary" />
+        </div>
+      ) : (
+        <div className="flex flex-col md:flex-row gap-2 justify-end mt-4">
+          <Button type="cancel" text="Cancel" onClick={props.onCancel} />
+          <Button
+            type="delete"
+            buttonType="submit"
+            text="Delete"
+            onClick={props.onSubmit}
+          />
+        </div>
+      )}
     </div>
   );
 }
