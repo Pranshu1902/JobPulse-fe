@@ -15,12 +15,14 @@ import { Job, JobComment } from "@/models/models";
 import Modal from "@components/Modal";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
 import { NotificationManager } from "react-notifications";
-import ConfirmDelete from "@/components/modals/ConfirmDelete";
-import StatusTimeline from "@/components/Timeline";
-import { TextField } from "@mui/material";
-import Button from "@/components/Button";
-import Loader from "@/components/Loader";
+import ConfirmDelete from "@components/modals/ConfirmDelete";
+import StatusTimeline from "@components/Timeline";
+import { CircularProgress, TextField } from "@mui/material";
+import Button from "@components/Button";
+import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
+import BasicMenu from "@components/BasicMenu";
+import EditComment from "@/components/modals/EditComment";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -29,6 +31,15 @@ export default function JobDetail() {
   const [jobDetails, setJobDetails] = useState<Job>();
   const [showStatusHistory, setShowStatusHistory] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteCommentModal, setShowDeleteCommentModal] = useState(false);
+  const [commentID, setCommentID] = useState("");
+  const [showEditComment, setShowEditComment] = useState(false);
+  const [editCommentDetails, setEditCommentDetails] = useState({
+    id: "",
+    newComment: "",
+  });
+  const [loadingModal, setLoadingModal] = useState(false);
+  const [addCommentLoading, setAddCommentLoading] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true); // State to manage loading status
   const { getToken, isLoading } = useAuth();
@@ -45,6 +56,26 @@ export default function JobDetail() {
     setShowDeleteModal(false);
   };
 
+  const displayDeleteCommentModal = (id: string) => {
+    setShowDeleteCommentModal(true);
+    setCommentID(id);
+  };
+
+  const hideDeleteCommentModal = () => {
+    setShowDeleteCommentModal(false);
+    setCommentID("");
+  };
+
+  const displayEditCommentModal = (id: string, comment: string) => {
+    setShowEditComment(true);
+    setEditCommentDetails({ id: id, newComment: comment });
+  };
+
+  const hideEditCommentModal = () => {
+    setShowEditComment(false);
+    setEditCommentDetails({ id: "", newComment: "" });
+  };
+
   const updateJobStatus = () => {
     router.push(`/jobs/${jobId}/status`);
   };
@@ -54,6 +85,7 @@ export default function JobDetail() {
   };
 
   const addComment = async () => {
+    setAddCommentLoading(true);
     const data = { comment: newComment };
     const response = await request(
       "POST",
@@ -69,15 +101,31 @@ export default function JobDetail() {
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
+    setAddCommentLoading(false);
+  };
+
+  const editComment = async (newComment: string) => {
+    setLoadingModal(true);
+    const response = await request(
+      "PUT",
+      { comment: newComment },
+      `/comments/${editCommentDetails.id}/`,
+      getToken()
+    );
+
+    if (response) {
+      NotificationManager.success("Comment updated successfully", "Success");
+      fetchData();
+      hideEditCommentModal();
+    } else {
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    }
+    setLoadingModal(false);
   };
 
   const deleteJob = async () => {
-    const response = await request(
-      "DELETE",
-      {},
-      `/jobs/${jobId}`,
-      getToken()
-    );
+    setLoadingModal(true);
+    const response = await request("DELETE", {}, `/jobs/${jobId}`, getToken());
 
     if (response) {
       NotificationManager.success("Job deleted successfully", "Success");
@@ -85,15 +133,47 @@ export default function JobDetail() {
     } else {
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
+    setLoadingModal(false);
+  };
+
+  const deleteComment = async () => {
+    setLoadingModal(true);
+    const response = await request(
+      "DELETE",
+      {},
+      `/comments/${commentID}`,
+      getToken()
+    );
+
+    if (response) {
+      NotificationManager.success("Comment deleted successfully", "Success");
+      fetchData();
+      hideDeleteCommentModal();
+    } else {
+      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    }
+    setLoadingModal(false);
   };
 
   const showCommentBox = (comment: JobComment) => {
     return (
-      <div key={comment.id} className="bg-lightgray p-3 rounded-lg relative">
-        <p>{comment.comment}</p>
-        <p className="text-sm absolute right-2 bottom-2">
-          {new Date(comment.date).toLocaleString()}
-        </p>
+      <div
+        key={comment.id}
+        className="bg-lightgray p-3 rounded-lg flex flex-col relative"
+      >
+        <p className="break-words md:w-5/6">{comment.comment}</p>
+        <div className="md:w-1/6 flex items-center justify-between gap-2 pt-3 md:pt-0">
+          <p className="text-sm md:absolute right-2 bottom-2">
+            {new Date(comment.date).toLocaleString()}
+          </p>
+          <div className="md:absolute right-2 top-0">
+            <BasicMenu
+              comment={comment}
+              onEdit={displayEditCommentModal}
+              onDelete={displayDeleteCommentModal}
+            />
+          </div>
+        </div>
       </div>
     );
   };
@@ -101,12 +181,7 @@ export default function JobDetail() {
   const fetchData = async () => {
     setLoading(true); // Set loading to true when fetching starts
     try {
-      const response = await request(
-        "GET",
-        {},
-        `/jobs/${jobId}`,
-        getToken()
-      );
+      const response = await request("GET", {}, `/jobs/${jobId}`, getToken());
       setJobDetails(response);
     } catch (error) {
       console.error("Error fetching job details:", error);
@@ -195,12 +270,18 @@ export default function JobDetail() {
             onChange={(e) => setNewComment(e.target.value)}
             className="w-full md:w-4/5"
           />
-          <Button
-            onClick={addComment}
-            className="w-full md:w-1/5"
-            type="primary"
-            text="Add"
-          ></Button>
+          {addCommentLoading ? (
+            <div className="flex justify-center w-full md:w-1/5">
+              <CircularProgress color="secondary" />
+            </div>
+          ) : (
+            <Button
+              onClick={addComment}
+              className="w-full md:w-1/5"
+              type="primary"
+              text="Add"
+            ></Button>
+          )}
         </div>
         <div className="flex flex-col gap-4 mt-6">
           {jobDetails?.comments.length ?? 0 > 0 ? (
@@ -225,6 +306,23 @@ export default function JobDetail() {
           title={"Job"}
           onSubmit={deleteJob}
           onCancel={hideDeleteModal}
+          isLoading={loadingModal}
+        />
+      </Modal>
+      <Modal open={showDeleteCommentModal} setOpen={setShowDeleteCommentModal}>
+        <ConfirmDelete
+          title={"Comment"}
+          onSubmit={deleteComment}
+          onCancel={hideDeleteCommentModal}
+          isLoading={loadingModal}
+        />
+      </Modal>
+      <Modal open={showEditComment} setOpen={setShowEditComment}>
+        <EditComment
+          initialComment={editCommentDetails.newComment}
+          isLoading={loadingModal}
+          onCancel={hideEditCommentModal}
+          onSubmit={editComment}
         />
       </Modal>
     </div>
