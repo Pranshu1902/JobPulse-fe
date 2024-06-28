@@ -7,6 +7,11 @@ import {
   faGlobe,
   faMoneyBill,
   faExternalLink,
+  faTrash,
+  faEdit,
+  faEye,
+  faCheck,
+  faBarsProgress,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -23,6 +28,7 @@ import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
 import BasicCommentMenu from "@components/BasicCommentMenu";
 import EditComment from "@/components/modals/EditComment";
+import StatusLabel from "@/components/StatusLabel";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -237,7 +243,12 @@ export default function JobDetail() {
       </div>
       <div className="bg-lightgray rounded-lg p-4 flex flex-col md:flex-row gap-6 justify-between">
         <div>
-          <p className="text-3xl font-bold">{jobDetails?.role}</p>
+          <div className="flex gap-3 items-center">
+            <p className="text-3xl font-bold">{jobDetails?.role}</p>
+            <div>
+              <StatusLabel status={jobDetails.status.status} />
+            </div>
+          </div>
           <p className="text-xl">{jobDetails?.company.name}</p>
           <div className="flex flex-col gap-2 mt-4">
             <div className="flex items-center gap-2">
@@ -264,32 +275,29 @@ export default function JobDetail() {
             </a>
           </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            type="primary"
-            text="View Status Updates"
-            onClick={displayStatusUpdatesRecord}
-          />
-          <Button
-            type="primary"
-            text="Update Status"
-            onClick={updateJobStatus}
-          />
-          <Button type="primary" text="Edit Job" onClick={editJob} />
-          <Button
-            type="delete"
-            text="Delete Job"
-            onClick={displayDeleteModal}
-          />
+        <div className="flex flex-col justify-center gap-2">
+          <Button type="primary" onClick={displayStatusUpdatesRecord}>
+            <FontAwesomeIcon icon={faEye} /> Status History
+          </Button>
+          <Button type="primary" onClick={updateJobStatus}>
+            <FontAwesomeIcon icon={faBarsProgress} /> Update Status
+          </Button>
+          <Button type="primary" onClick={editJob}>
+            <FontAwesomeIcon icon={faEdit} /> Edit Job
+          </Button>
+          <Button type="delete" onClick={displayDeleteModal}>
+            <FontAwesomeIcon icon={faTrash} /> Delete Job
+          </Button>
         </div>
       </div>
       <div>
-        <div className="text-2xl mt-4">Comments:</div>
+        <div className="text-2xl mt-4 font-semibold">Comments:</div>
         <div className="flex flex-col md:flex-row items-center gap-4 mt-4">
           <TextField
+            placeholder="Enter comment"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            className="w-full md:w-4/5"
+            className="w-full md:w-4/5 h-full"
             disabled={addCommentLoading}
           />
           {addCommentLoading ? (
@@ -301,7 +309,8 @@ export default function JobDetail() {
               onClick={addComment}
               className="w-full md:w-1/5"
               type="primary"
-              text="Add"
+              text="Comment"
+              heightStyle={"55px"}
             ></Button>
           )}
         </div>

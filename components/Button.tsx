@@ -9,6 +9,7 @@ interface ButtonProps {
   icon?: any;
   className?: string;
   children?: React.ReactNode;
+  heightStyle?: string;
 }
 
 export default function Button(props: ButtonProps) {
@@ -29,6 +30,7 @@ export default function Button(props: ButtonProps) {
       }`}
       onClick={props.onClick}
       type={props?.buttonType}
+      style={{ height: props.heightStyle }}
     >
       <FontAwesomeIcon icon={props?.icon} />
       {props.text} {props.children}
