@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { JobComment } from "@models/models";
 
-interface BasicMenuProps {
+interface BasicCommentMenuProps {
   comment: JobComment;
   onDelete: (e: string) => void;
   onEdit: (id: string, comment: string) => void;
 }
 
-export default function BasicMenu(props: BasicMenuProps) {
+export default function BasicCommentMenu(props: BasicCommentMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

@@ -21,7 +21,7 @@ import { CircularProgress, TextField } from "@mui/material";
 import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
-import BasicMenu from "@components/BasicMenu";
+import BasicCommentMenu from "@components/BasicCommentMenu";
 import EditComment from "@/components/modals/EditComment";
 
 export default function JobDetail() {
@@ -167,7 +167,7 @@ export default function JobDetail() {
             {new Date(comment.date).toLocaleString()}
           </p>
           <div className="md:absolute right-2 top-0">
-            <BasicMenu
+            <BasicCommentMenu
               comment={comment}
               onEdit={displayEditCommentModal}
               onDelete={displayDeleteCommentModal}
