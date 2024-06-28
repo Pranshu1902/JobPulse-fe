@@ -1,4 +1,5 @@
 import { backendBaseURL } from "@constants/constants";
+import { NotificationManager } from "react-notifications";
 
 type methods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
@@ -39,7 +40,20 @@ export async function request(
       return json;
     } else {
       const errorJson = await response.json();
-      throw Error(errorJson);
+
+      if (errorJson.detail === "Invalid token.") {
+        return errorJson;
+      }
+
+      const result = Object.entries<string[]>(errorJson)
+        .map(
+          ([key, value]) =>
+            `${key}: ${value.map((msg) => `'${msg}'`).join(" ")}`
+        )
+        .join(", ");
+      NotificationManager.error(result, "Error");
+
+      return errorJson;
     }
   } catch (error) {
     return error;
