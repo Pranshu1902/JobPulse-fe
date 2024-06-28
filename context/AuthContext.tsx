@@ -36,7 +36,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       if (cookies.get("token")) {
         const token = cookies.get("token");
         const response = await request("GET", {}, "/current-user/", token);
-        setUser({ ...response, token });
+
+        if (response.detail === "Invalid token.") {
+          logOut();
+        } else {
+          setUser({ ...response, token });
+        }
       }
 
       // user logged in through social media
@@ -47,7 +52,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           "/current-user/",
           (session.user as any).authToken
         );
-        setUser({ ...response, token: (session.user as any).authToken });
+        if (response.detail === "Invalid token.") {
+          logOut();
+        } else {
+          setUser({ ...response, token: (session.user as any).authToken });
+        }
       }
 
       // if no token found then set to null
@@ -55,7 +64,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setUser(null);
       }
     } catch (error) {
-      console.error("Failed to fetch user:", error);
       setUser(null);
     } finally {
       setIsLoading(false);
@@ -80,7 +88,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const response = await request("GET", {}, "/current-user/", user?.token);
       setUser({ ...response, token: user?.token });
     } catch (error) {
-      console.error("Failed to refetch user:", error);
       setUser(null);
     } finally {
       setIsLoading(false);
