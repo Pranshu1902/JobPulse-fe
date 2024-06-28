@@ -11,4 +11,4 @@ export const JOB_STATUSES: JobStatus[] = [
   "Withdrawn",
 ];
 
-export const backendBaseURL = "https://web-production-84a7.up.railway.app";
+export const backendBaseURL = "https://jobpulse.up.railway.app";
