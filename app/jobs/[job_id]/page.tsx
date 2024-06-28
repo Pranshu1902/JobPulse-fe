@@ -290,6 +290,7 @@ export default function JobDetail() {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             className="w-full md:w-4/5"
+            disabled={addCommentLoading}
           />
           {addCommentLoading ? (
             <div className="flex justify-center w-full md:w-1/5">
