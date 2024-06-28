@@ -49,7 +49,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         const response = await axios.post(
-          `${backendBaseURL}users/social_login/`,
+          `${backendBaseURL}/users/social_login/`,
           {
             email: user.email,
             username: user.email,
