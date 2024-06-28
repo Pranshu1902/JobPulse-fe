@@ -16,9 +16,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
-import { Job, JobComment } from "@/models/models";
+import { Job, JobComment } from "@models/models";
 import Modal from "@components/Modal";
-import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
+import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 import ConfirmDelete from "@components/modals/ConfirmDelete";
 import StatusTimeline from "@components/Timeline";
@@ -27,8 +27,8 @@ import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
 import BasicCommentMenu from "@components/BasicCommentMenu";
-import EditComment from "@/components/modals/EditComment";
-import StatusLabel from "@/components/StatusLabel";
+import EditComment from "@components/modals/EditComment";
+import StatusLabel from "@components/StatusLabel";
 
 export default function JobDetail() {
   const router = useRouter();

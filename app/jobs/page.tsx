@@ -2,11 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import { request } from "@api/fetch";
-import { Job, JobStatus } from "@/models/models";
+import { Job, JobStatus } from "@models/models";
 import Link from "next/link";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "@/components/Button";
+import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { JOB_STATUSES } from "../constants/constants";
 import { useAuth } from "@context/AuthContext";

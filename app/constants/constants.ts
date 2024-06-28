@@ -1,4 +1,4 @@
-import { JobStatus } from "@/models/models";
+import { JobStatus } from "@models/models";
 
 export const COMMON_ERROR_NOTIFICATION_MESSAGE: string =
   "Something went wrong!";

@@ -6,10 +6,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Button from "@/components/Button";
-import { request } from "@/app/api/fetch";
+import Button from "@components/Button";
+import { request } from "@api/fetch";
 import { NotificationManager } from "react-notifications";
-import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@/app/constants/constants";
+import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { useAuth } from "@context/AuthContext";
 
 const initialJobData: JobCreateModel = {

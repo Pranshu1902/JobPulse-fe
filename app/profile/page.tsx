@@ -7,8 +7,8 @@ import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
-import { AuthUser } from "@/models/models";
+import { useAuth } from "@context/AuthContext";
+import { AuthUser } from "@models/models";
 
 const Loader = () => (
   <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">

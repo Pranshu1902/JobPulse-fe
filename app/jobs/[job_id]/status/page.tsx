@@ -6,7 +6,7 @@ import {
   JOB_STATUSES,
 } from "@constants/constants";
 import Dropdown from "@components/Dropdown";
-import { Job, JobStatus } from "@/models/models";
+import { Job, JobStatus } from "@models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParams, useRouter } from "next/navigation";

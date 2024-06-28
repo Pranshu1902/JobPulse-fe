@@ -10,7 +10,7 @@ import TimelineOppositeContent, {
 } from "@mui/lab/TimelineOppositeContent";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
-import { StatusUpdate } from "@/models/models";
+import { StatusUpdate } from "@models/models";
 import tailwindConfig from "../tailwind.config";
 
 interface StatusTimelineProps {
