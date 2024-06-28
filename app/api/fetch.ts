@@ -41,7 +41,8 @@ export async function request(
     } else {
       const errorJson = await response.json();
 
-      if (errorJson.detail === "Invalid token.") {
+      if (errorJson.hasOwnProperty('detail')) {
+        NotificationManager.error(errorJson.detail, "Error");
         return errorJson;
       }
 
