@@ -179,19 +179,6 @@ export default function JobDetail() {
     );
   };
 
-  const fetchData = async () => {
-    setLoading(true); // Set loading to true when fetching starts
-    try {
-      const response = await request("GET", {}, `/jobs/${jobId}`, getToken());
-      setJobDetails(response);
-    } catch (error) {
-      console.error("Error fetching job details:", error);
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
-    } finally {
-      setLoading(false); // Set loading to false when fetching completes
-    }
-  };
-
   const fetchComments = async () => {
     setCommentsLoading(true);
     try {
@@ -213,8 +200,21 @@ export default function JobDetail() {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true); // Set loading to true when fetching starts
+      try {
+        const response = await request("GET", {}, `/jobs/${jobId}`, getToken());
+        setJobDetails(response);
+      } catch (error) {
+        console.error("Error fetching job details:", error);
+        NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+      } finally {
+        setLoading(false); // Set loading to false when fetching completes
+      }
+    };
+
     fetchData();
-  }, [isLoading]);
+  }, [isLoading, getToken, jobId]);
 
   useEffect(() => {
     document.title = `${jobDetails?.role} | JobPulse`;
