@@ -56,8 +56,6 @@ export default function Signup() {
           fetchUser();
           router.replace("/");
         }
-      } else {
-        NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
       }
     } catch (error) {
       console.error("Signup Error:", error);

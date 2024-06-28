@@ -42,8 +42,6 @@ export default function Login() {
         fetchUser();
         NotificationManager.success("Logged in successfully", "Success");
         router.replace("/");
-      } else {
-        NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
       }
     } catch (error) {
       console.error("Login Error:", error);

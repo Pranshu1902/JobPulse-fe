@@ -1,10 +1,7 @@
 "use client";
 
 import { request } from "@api/fetch";
-import {
-  COMMON_ERROR_NOTIFICATION_MESSAGE,
-  JOB_STATUSES,
-} from "@constants/constants";
+import { JOB_STATUSES } from "@constants/constants";
 import Dropdown from "@components/Dropdown";
 import { Job, JobStatus } from "@models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
@@ -30,16 +27,11 @@ export default function UpdateJobStatus() {
   const [status, setStatus] = useState<JobStatus>("Applied");
   const [updateText, setUpdateText] = useState("");
   const [loading, setLoading] = useState(false); // State to manage loading status
-  const {getToken} = useAuth();
+  const { getToken } = useAuth();
 
   const fetchData = async () => {
     setLoading(true); // Set loading to true while fetching data
-    const response = await request(
-      "GET",
-      {},
-      `/jobs/${jobId}/`,
-      getToken()
-    );
+    const response = await request("GET", {}, `/jobs/${jobId}/`, getToken());
     setJobDetails(response);
     setStatus(response.status.status);
     setLoading(false); // Reset loading state after data fetching completes
@@ -60,8 +52,6 @@ export default function UpdateJobStatus() {
     if (response?.id) {
       NotificationManager.success("Status updated successfully", "Success");
       router.replace(`/jobs/${jobId}`);
-    } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
 
     setLoading(false); // Reset loading state after request completes

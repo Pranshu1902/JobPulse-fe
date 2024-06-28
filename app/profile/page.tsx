@@ -3,7 +3,6 @@
 import { request } from "@api/fetch";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
-import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
 import { useRouter } from "next/navigation";
@@ -57,7 +56,6 @@ export default function Profile() {
       refetch(); // Refresh user data after
       disabledEditMode();
     } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
       setUserData(user); // reset the data
     }
 

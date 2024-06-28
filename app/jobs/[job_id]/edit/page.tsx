@@ -64,8 +64,6 @@ export default function EditJob() {
       if (response?.id) {
         NotificationManager.success("Job updated successfully", "Success");
         router.replace(`/jobs/${jobId}`);
-      } else {
-        NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
       }
     } catch (error) {
       console.error("Error updating job:", error);

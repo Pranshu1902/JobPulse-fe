@@ -105,8 +105,6 @@ export default function JobDetail() {
       NotificationManager.success("Comment posted successfully", "Success");
       setNewComment("");
       fetchComments();
-    } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
     setAddCommentLoading(false);
   };
@@ -124,8 +122,6 @@ export default function JobDetail() {
       NotificationManager.success("Comment updated successfully", "Success");
       fetchComments();
       hideEditCommentModal();
-    } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
     setLoadingModal(false);
   };
@@ -137,8 +133,6 @@ export default function JobDetail() {
     if (response) {
       NotificationManager.success("Job deleted successfully", "Success");
       router.replace("/jobs");
-    } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
     setLoadingModal(false);
   };
@@ -156,8 +150,6 @@ export default function JobDetail() {
       NotificationManager.success("Comment deleted successfully", "Success");
       fetchComments();
       hideDeleteCommentModal();
-    } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
     setLoadingModal(false);
   };

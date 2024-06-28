@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import Button from "@components/Button";
 import { request } from "@api/fetch";
 import { NotificationManager } from "react-notifications";
-import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { useAuth } from "@context/AuthContext";
 
 const initialJobData: JobCreateModel = {
@@ -25,7 +24,7 @@ const initialJobData: JobCreateModel = {
 export default function NewJob() {
   const router = useRouter();
   const [jobData, setJobData] = useState<JobCreateModel>(initialJobData);
-  const { user, getToken } = useAuth();
+  const { getToken } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -34,8 +33,6 @@ export default function NewJob() {
     if (response?.id) {
       NotificationManager.success("Job posted successfully", "Success");
       router.replace("/jobs");
-    } else {
-      NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     }
   };
 
