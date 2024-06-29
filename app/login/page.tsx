@@ -40,7 +40,6 @@ export default function Login() {
       if (response && response["token"]) {
         cookies.set("token", response["token"]);
         fetchUser();
-        NotificationManager.success("Logged in successfully", "Success");
         router.replace("/");
       }
     } catch (error) {

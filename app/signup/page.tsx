@@ -46,8 +46,6 @@ export default function Signup() {
       const response = await request("POST", datas, "/users/");
 
       if (response && response.id) {
-        NotificationManager.success("Account created successfully", "Success");
-
         // log in user
         const loginResponse = await request("POST", datas, "/api-token-auth/");
 
