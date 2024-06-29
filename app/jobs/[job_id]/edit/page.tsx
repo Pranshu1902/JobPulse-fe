@@ -99,6 +99,7 @@ export default function EditJob() {
             variant="outlined"
             value={jobData.role}
             onChange={(e) => setJobData({ ...jobData, role: e.target.value })}
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -115,6 +116,7 @@ export default function EditJob() {
             variant="outlined"
             value={jobData.salary}
             onChange={(e) => setJobData({ ...jobData, salary: e.target.value })}
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -125,6 +127,7 @@ export default function EditJob() {
             onChange={(e) =>
               setJobData({ ...jobData, contract_length: e.target.value })
             }
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -135,6 +138,7 @@ export default function EditJob() {
             onChange={(e) =>
               setJobData({ ...jobData, platform: e.target.value })
             }
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -145,6 +149,7 @@ export default function EditJob() {
             onChange={(e) =>
               setJobData({ ...jobData, job_link: e.target.value })
             }
+            disabled={loading}
           />
         </div>
         {loading ? (
