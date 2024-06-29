@@ -10,6 +10,7 @@ import Button from "@components/Button";
 import { request } from "@api/fetch";
 import { NotificationManager } from "react-notifications";
 import { useAuth } from "@context/AuthContext";
+import FormLoader from "@/components/FormLoader";
 
 const initialJobData: JobCreateModel = {
   role: "",
@@ -24,16 +25,20 @@ const initialJobData: JobCreateModel = {
 export default function NewJob() {
   const router = useRouter();
   const [jobData, setJobData] = useState<JobCreateModel>(initialJobData);
+  const [loading, setLoading] = useState(false);
   const { getToken } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     const response = await request("POST", jobData, "/jobs/", getToken());
 
     if (response?.id) {
       NotificationManager.success("Job posted successfully", "Success");
       router.replace("/jobs");
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -59,6 +64,7 @@ export default function NewJob() {
             variant="outlined"
             value={jobData.role}
             onChange={(e) => setJobData({ ...jobData, role: e.target.value })}
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -69,6 +75,7 @@ export default function NewJob() {
             onChange={(e) =>
               setJobData({ ...jobData, company: e.target.value })
             }
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -77,6 +84,7 @@ export default function NewJob() {
             variant="outlined"
             value={jobData.salary}
             onChange={(e) => setJobData({ ...jobData, salary: e.target.value })}
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -87,6 +95,7 @@ export default function NewJob() {
             onChange={(e) =>
               setJobData({ ...jobData, contract_length: e.target.value })
             }
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -97,6 +106,7 @@ export default function NewJob() {
             onChange={(e) =>
               setJobData({ ...jobData, platform: e.target.value })
             }
+            disabled={loading}
           />
           <TextField
             className="w-full"
@@ -107,15 +117,26 @@ export default function NewJob() {
             onChange={(e) =>
               setJobData({ ...jobData, job_link: e.target.value })
             }
+            disabled={loading}
           />
         </div>
-        <div className="flex justify-center items-center">
-          <Button
-            type={"primary"}
-            buttonType="submit"
-            text="Create Job"
-          ></Button>
-        </div>
+        {loading ? (
+          <FormLoader />
+        ) : (
+          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+            <Button
+              type="cancel"
+              buttonType="button"
+              text="Cancel"
+              onClick={router.back}
+            />
+            <Button
+              type={"primary"}
+              buttonType="submit"
+              text="Submit Job"
+            ></Button>
+          </div>
+        )}
       </form>
     </div>
   );
