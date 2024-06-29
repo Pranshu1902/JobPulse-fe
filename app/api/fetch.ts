@@ -38,9 +38,14 @@ export async function request(
       headers: { "Content-Type": "application/json", Authorization: auth },
       body: method !== "GET" ? payload : null,
     });
-    if (response.ok) {
-      const json = await response.json();
-      return json;
+
+    if (response.ok || response.status === 204) {
+      if (response.status === 204) {
+        return response;
+      } else {
+        const json = await response.json();
+        return json;
+      }
     } else {
       const errorJson = await response.json();
 
