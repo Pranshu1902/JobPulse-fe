@@ -308,7 +308,7 @@ export default function JobDetail() {
         </div>
         {commentsLoading ? (
           <div className="flex justify-center mt-4">
-            <Loader />
+            <Loader className="h-fit mt-8" />
           </div>
         ) : (
           <div className="flex flex-col gap-4 mt-6">
