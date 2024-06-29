@@ -44,7 +44,7 @@ export default function Jobs() {
           {filteredJobList[status].map((job: Job) => showJobCard(job))}
         </div>
         {filteredJobList[status].length === 0 && (
-          <div className="flex justify-center p-2 bg-lightbg rounded-lg">
+          <div className="flex justify-center p-2 bg-lightbg rounded-lg text-gray-500 font-semibold">
             No Jobs found
           </div>
         )}
