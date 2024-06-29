@@ -32,7 +32,7 @@ export default function Jobs() {
     return (
       <div
         key={status}
-        className="p-4 shadow rounded-xl bg-lightgray min-w-[300px] w-[300px] flex flex-col h-[85vh] max-h-[90vh]"
+        className="p-4 shadow rounded-xl bg-lightgray min-w-[300px] md:min-w-[350px] md:w-[350px] flex flex-col h-[85vh] max-h-[90vh]"
       >
         <div className="flex justify-between items-center mb-4">
           <p className="font-semibold text-2xl">{status}</p>
@@ -122,39 +122,37 @@ export default function Jobs() {
     }
   };
 
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <div className="p-4">
-      {loading ? (
-        <Loader /> // Display loader while fetching data
-      ) : (
-        <>
-          <div className="flex justify-between items-center mb-8">
-            <p className="text-3xl font-semibold">List Jobs {isLoading}</p>
-            <Link href={"/jobs/new"}>
-              <Button text="+ New" type="primary" />
-            </Link>
-          </div>
-          <div className="flex gap-4 relative">
-            <button
-              className="absolute px-3 left-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
-              onClick={scrollLeft}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} />
-            </button>
-            <div className="flex gap-4 overflow-x-auto" ref={scrollRef}>
-              {JOB_STATUSES.map((job_status: JobStatus) =>
-                showBoardColumn(job_status)
-              )}
-            </div>
-            <button
-              className="absolute px-3 right-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
-              onClick={scrollRight}
-            >
-              <FontAwesomeIcon icon={faArrowRight} />
-            </button>
-          </div>
-        </>
-      )}
+      <div className="flex justify-between items-center mb-8">
+        <p className="text-3xl font-semibold">List Jobs {isLoading}</p>
+        <Link href={"/jobs/new"}>
+          <Button text="+ New" type="primary" />
+        </Link>
+      </div>
+      <div className="flex gap-4 relative">
+        <button
+          className="absolute px-3 left-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
+          onClick={scrollLeft}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <div className="flex gap-4 overflow-x-auto" ref={scrollRef}>
+          {JOB_STATUSES.map((job_status: JobStatus) =>
+            showBoardColumn(job_status)
+          )}
+        </div>
+        <button
+          className="absolute px-3 right-1 top-1/2 transform -translate-y-1/2 bg-tertiary bg-opacity-50 rounded-full p-2"
+          onClick={scrollRight}
+        >
+          <FontAwesomeIcon icon={faArrowRight} />
+        </button>
+      </div>
     </div>
   );
 }
