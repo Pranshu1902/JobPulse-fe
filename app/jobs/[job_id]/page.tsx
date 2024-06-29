@@ -10,7 +10,6 @@ import {
   faTrash,
   faEdit,
   faEye,
-  faCheck,
   faBarsProgress,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,13 +21,14 @@ import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 import ConfirmDelete from "@components/modals/ConfirmDelete";
 import StatusTimeline from "@components/Timeline";
-import { CircularProgress, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
 import BasicCommentMenu from "@components/BasicCommentMenu";
 import EditComment from "@components/modals/EditComment";
 import StatusLabel from "@components/StatusLabel";
+import FormLoader from "@components/FormLoader";
 
 export default function JobDetail() {
   const router = useRouter();
@@ -294,7 +294,7 @@ export default function JobDetail() {
           />
           {addCommentLoading ? (
             <div className="flex justify-center w-full md:w-1/5">
-              <CircularProgress color="secondary" />
+              <FormLoader />
             </div>
           ) : (
             <Button

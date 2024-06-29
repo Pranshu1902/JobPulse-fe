@@ -3,8 +3,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import Button from "@components/Button";
-import { CircularProgress, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useState } from "react";
+import FormLoader from "@components/FormLoader";
 
 interface EditCommentProps {
   initialComment: string;
@@ -30,7 +31,7 @@ export default function EditComment(props: EditCommentProps) {
       </div>
       {props.isLoading ? (
         <div className="mt-4 flex justify-center">
-          <CircularProgress color="secondary" />
+          <FormLoader />
         </div>
       ) : (
         <div className="flex flex-col md:flex-row gap-2 justify-end mt-4">

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import Button from "@components/Button";
-import { CircularProgress } from "@mui/material";
+import FormLoader from "@components/FormLoader";
 
 interface ConfirmDeleteProps {
   title: string;
@@ -20,7 +20,7 @@ export default function ConfirmDelete(props: ConfirmDeleteProps) {
       <p>Are you sure you want to delete?</p>
       {props.isLoading ? (
         <div className="mt-4 flex justify-center">
-          <CircularProgress color="secondary" />
+          <FormLoader />
         </div>
       ) : (
         <div className="flex flex-col md:flex-row gap-2 justify-end mt-4">
