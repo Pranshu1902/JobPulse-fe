@@ -146,8 +146,8 @@ export default function Home() {
               .map((job: Job) => showJobCard(job))}
           </div>
         ) : (
-          <div className="flex mt-6 justify-center bg-lightgray p-3 rounded-lg shadow">
-            No Jobs Yet
+          <div className="flex mt-6 justify-center bg-lightgray p-3 rounded-lg shadow text-gray-500 font-semibold">
+            No Jobs Found
           </div>
         )}
       </div>
