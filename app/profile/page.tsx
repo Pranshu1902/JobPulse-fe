@@ -92,7 +92,7 @@ export default function Profile() {
           id="outlined-basic"
           label="Last Name"
           variant="outlined"
-          value={userData?.last_name}
+          value={userData?.last_name ?? ""}
           onChange={(e) => setUserData({ ...user, last_name: e.target.value })}
           disabled={!editMode}
         />
@@ -101,7 +101,7 @@ export default function Profile() {
           id="outlined-basic"
           label="Username"
           variant="outlined"
-          value={userData?.username}
+          value={userData?.username ?? ""}
           onChange={(e) => setUserData({ ...user, username: e.target.value })}
           disabled={!editMode}
         />
@@ -110,7 +110,7 @@ export default function Profile() {
           id="outlined-basic"
           label="Email"
           variant="outlined"
-          value={userData?.email}
+          value={userData?.email ?? ""}
           onChange={(e) => setUserData({ ...user, email: e.target.value })}
           disabled={!editMode}
         />
