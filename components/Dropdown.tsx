@@ -9,10 +9,11 @@ interface DropdownProps {
   state: any;
   setState: (e: any) => void;
   options: any[];
+  disabled?: boolean;
 }
 
 export default function Dropdown(props: DropdownProps) {
-  const { name, state, setState, options } = props;
+  const { name, state, setState, options, disabled } = props;
 
   const handleChange = (event: SelectChangeEvent) => {
     setState(event.target.value as string);
@@ -20,7 +21,7 @@ export default function Dropdown(props: DropdownProps) {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
+      <FormControl fullWidth disabled={disabled ?? false}>
         <InputLabel id="demo-simple-select-label">{name}</InputLabel>
         <Select
           labelId="demo-simple-select-label"

@@ -12,6 +12,7 @@ import { TextField } from "@mui/material";
 import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
 import { useAuth } from "@context/AuthContext";
+import FormLoader from "@components/FormLoader";
 
 const Loader = () => (
   <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">
@@ -26,20 +27,21 @@ export default function UpdateJobStatus() {
   const [jobDetails, setJobDetails] = useState<Job>();
   const [status, setStatus] = useState<JobStatus>("Applied");
   const [updateText, setUpdateText] = useState("");
-  const [loading, setLoading] = useState(false); // State to manage loading status
+  const [loadingData, setLoadingData] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { getToken } = useAuth();
 
   const fetchData = async () => {
-    setLoading(true); // Set loading to true while fetching data
+    setLoadingData(true);
     const response = await request("GET", {}, `/jobs/${jobId}/`, getToken());
     setJobDetails(response);
     setStatus(response.status.status);
-    setLoading(false); // Reset loading state after data fetching completes
+    setLoadingData(false);
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    setLoading(true); // Set loading to true when submitting form
+    setLoading(true);
 
     const data = { status: status, update_text: updateText };
     const response = await request(
@@ -54,7 +56,7 @@ export default function UpdateJobStatus() {
       router.replace(`/jobs/${jobId}`);
     }
 
-    setLoading(false); // Reset loading state after request completes
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -65,9 +67,12 @@ export default function UpdateJobStatus() {
     document.title = `Update Status | ${jobDetails?.role} | JobPulse`;
   }, [jobDetails]);
 
+  if (loadingData) {
+    return <Loader />;
+  }
+
   return (
     <div className="p-4">
-      {loading && <Loader />} {/* Display loader when loading is true */}
       <div className="mb-8 flex flex-col md:flex-row md:items-center gap-2">
         <div className="flex items-center gap-2 font-semibold text-2xl">
           <button onClick={() => router.back()}>
@@ -89,6 +94,7 @@ export default function UpdateJobStatus() {
             state={status}
             setState={setStatus}
             options={JOB_STATUSES}
+            disabled={loading}
           ></Dropdown>
           <TextField
             className="w-full"
@@ -97,16 +103,25 @@ export default function UpdateJobStatus() {
             variant="outlined"
             value={updateText}
             onChange={(e) => setUpdateText(e.target.value)}
+            disabled={loading}
           />
-          <div className="flex justify-center gap-2">
-            <Button
-              type="cancel"
-              buttonType={"button"}
-              text={"Cancel"}
-              onClick={() => router.back()}
-            ></Button>
-            <Button type="primary" buttonType="submit" text={"Update"}></Button>
-          </div>
+          {loading ? (
+            <FormLoader />
+          ) : (
+            <div className="flex justify-center gap-2">
+              <Button
+                type="cancel"
+                buttonType={"button"}
+                text={"Cancel"}
+                onClick={() => router.back()}
+              ></Button>
+              <Button
+                type="primary"
+                buttonType="submit"
+                text={"Update"}
+              ></Button>
+            </div>
+          )}
         </form>
       </div>
     </div>
