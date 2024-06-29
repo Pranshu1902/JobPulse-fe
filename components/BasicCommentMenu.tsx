@@ -29,7 +29,7 @@ export default function BasicCommentMenu(props: BasicCommentMenuProps) {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        className="hover:text-primary hover:bg-tertiary rounded-full text-2xl px-2"
+        className="hover:text-primary rounded-full text-2xl px-2"
       >
         <FontAwesomeIcon icon={faEllipsis} />
       </button>
