@@ -244,7 +244,6 @@ export default function JobDetail() {
           </button>
           <p>Job Details</p>
         </div>
-        <p>ID: {jobId}</p>
       </div>
       <div className="bg-lightgray rounded-lg p-4 flex flex-col md:flex-row gap-6 justify-between">
         <div>
