@@ -90,14 +90,17 @@ Production: https://jobpulse-fe.vercel.app/
 
 ## Screenshots
 
+Landing Page:
+![Landing Page](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/dc9fe715-5a71-4d50-9780-0e37b725f006)
+
 Dashboard:
-![App Screenshot](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/bfe9f0f0-50ea-4d63-8323-616104ec6c74)
+![Dashboard](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/23c8e519-2124-4d94-91f2-ed3dec62a1f3)
 
 Kanban Board:
-![Kanban Board](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/ef32a289-9922-4463-af3d-bf1f29f2eeac)
+![Kanban Board](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/d6c3ae21-3652-4fbd-aed2-9ed0d0eefffa)
 
 Timeline View of Status:
-![Timeline view of Status](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/f6e0f774-efa1-4bd6-89ac-5167e9a68a45)
+![Timeline view of Status](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/30d8df37-7ab8-4e82-a0c4-15e150a6229a)
 
 Job Home Page:
-![Job Home Page](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/032a8db7-a436-48e5-a303-ba79ec55259e)
+![Job Home Page](https://github.com/Pranshu1902/JobPulse-fe/assets/70687348/40aea2db-0e22-47b7-9c1a-a47189e58c8e)
