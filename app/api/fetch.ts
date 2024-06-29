@@ -1,4 +1,4 @@
-import { backendBaseURL } from "@constants/constants";
+import { backendBaseURL, COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 
 type methods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
@@ -49,7 +49,7 @@ export async function request(
       const result = Object.entries<string[]>(errorJson)
         .map(
           ([key, value]) =>
-            `${key}: ${value.map((msg) => `'${msg}'`).join(" ")}`
+            `${key.toUpperCase()}: ${value.map((msg) => `'${msg}'`).join(" ")}`
         )
         .join(", ");
       NotificationManager.error(result, "Error");
@@ -57,6 +57,7 @@ export async function request(
       return errorJson;
     }
   } catch (error) {
+    NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
     return error;
   }
 }
