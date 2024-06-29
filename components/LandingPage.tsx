@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import dashboard from "@assets/home/dashboard.png";
 import jobs from "@assets/home/jobs.png";
 import job_detail from "@assets/home/job_detail.png";
 import status from "@assets/home/status.png";
@@ -104,7 +105,26 @@ export default function LandingPage() {
 
             <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
               <Image
-                className="w-full md:w-1/2 rounded-lg"
+                className="w-full md:w-1/2 rounded-lg shadow"
+                src={dashboard}
+                alt="dashboard"
+              />
+              <div className="text-center md:w-1/2 md:text-left md:pr-6">
+                <h2 className="text-4xl font-bold text-gray-800 mb-2">
+                  Dashboard
+                </h2>
+                <p className="text-gray-600 text-xl">
+                  Gain a comprehensive overview of your job applications with
+                  our intuitive dashboard. Monitor your progress, view key
+                  metrics, and access insights that help you stay organized and
+                  on top of your job search.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center md:items-start md:flex-row-reverse gap-12 p-6 bg-white shadow-lg rounded-lg">
+              <Image
+                className="w-full md:w-1/2 rounded-lg shadow"
                 src={jobs}
                 alt="jobs page"
               />
@@ -120,9 +140,9 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center md:items-start md:flex-row-reverse gap-12 p-6 bg-white shadow-lg rounded-lg">
+            <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
               <Image
-                className="w-full md:w-1/2 rounded-lg"
+                className="w-full md:w-1/2 rounded-lg shadow"
                 src={status}
                 alt="status page"
               />
@@ -139,9 +159,9 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="flex flex-col items-center md:items-start md:flex-row gap-12 p-6 bg-white shadow-lg rounded-lg">
+            <div className="flex flex-col items-center md:items-start md:flex-row-reverse gap-12 p-6 bg-white shadow-lg rounded-lg">
               <Image
-                className="w-full md:w-1/2 rounded-lg"
+                className="w-full md:w-1/2 rounded-lg shadow"
                 src={job_detail}
                 alt="job detail page"
               />
@@ -161,7 +181,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="text-center p-6 bg-primary text-white mt-12">
-        <p>© 2024 JobPulse. All rights reserved.</p>
+        <p>JobPulse 2024. All rights reserved.</p>
         <div className="flex justify-center items-center p-2">
           Made with &nbsp;{" "}
           <FontAwesomeIcon icon={faHeart} className="text-red-500" />
