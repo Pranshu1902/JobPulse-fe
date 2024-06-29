@@ -11,11 +11,15 @@ import { request } from "@api/fetch";
 import { NotificationManager } from "react-notifications";
 import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { useAuth } from "@context/AuthContext";
+import FormLoader from "@components/FormLoader";
+import Loader from "@components/Loader";
 
 export default function EditJob() {
   const params = useParams();
   const router = useRouter();
   const jobId = params.job_id;
+  const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
   const [jobData, setJobData] = useState<JobEditModel>({
     role: "",
     company: { name: "" },
@@ -25,20 +29,18 @@ export default function EditJob() {
     platform: "",
     salary: "",
   });
-  const {getToken, isLoading} = useAuth()
+  const { getToken, isLoading } = useAuth();
 
   const fetchData = async () => {
+    setLoadingData(true);
     try {
-      const response = await request(
-        "GET",
-        {},
-        `/jobs/${jobId}/`,
-        getToken()
-      );
+      const response = await request("GET", {}, `/jobs/${jobId}/`, getToken());
       setJobData(response);
     } catch (error) {
       console.error("Error fetching job details:", error);
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    } finally {
+      setLoadingData(false);
     }
   };
 
@@ -52,6 +54,7 @@ export default function EditJob() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await request(
@@ -68,8 +71,14 @@ export default function EditJob() {
     } catch (error) {
       console.error("Error updating job:", error);
       NotificationManager.error(COMMON_ERROR_NOTIFICATION_MESSAGE, "Error");
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loadingData) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4">
@@ -138,19 +147,23 @@ export default function EditJob() {
             }
           />
         </div>
-        <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-          <Button
-            type="cancel"
-            buttonType="button"
-            text="Cancel"
-            onClick={router.back}
-          />
-          <Button
-            type={"primary"}
-            buttonType="submit"
-            text="Update Job"
-          ></Button>
-        </div>
+        {loading ? (
+          <FormLoader />
+        ) : (
+          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
+            <Button
+              type="cancel"
+              buttonType="button"
+              text="Cancel"
+              onClick={router.back}
+            />
+            <Button
+              type={"primary"}
+              buttonType="submit"
+              text="Update Job"
+            ></Button>
+          </div>
+        )}
       </form>
     </div>
   );
