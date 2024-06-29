@@ -1,12 +1,10 @@
 import { ButtonTypes } from "@models/types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ButtonProps {
   type: ButtonTypes;
   buttonType?: "submit" | "reset" | "button" | undefined;
   text?: string;
   onClick?: (e: any) => void;
-  icon?: any;
   className?: string;
   children?: React.ReactNode;
   heightStyle?: string;
@@ -32,7 +30,6 @@ export default function Button(props: ButtonProps) {
       type={props?.buttonType}
       style={{ height: props.heightStyle }}
     >
-      <FontAwesomeIcon icon={props?.icon} />
       {props.text} {props.children}
     </button>
   );
