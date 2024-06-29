@@ -1,4 +1,7 @@
-import { backendBaseURL, COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
+import {
+  backendBaseURL,
+  COMMON_ERROR_NOTIFICATION_MESSAGE,
+} from "@constants/constants";
 import { NotificationManager } from "react-notifications";
 
 type methods = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
@@ -41,7 +44,7 @@ export async function request(
     } else {
       const errorJson = await response.json();
 
-      if (errorJson.hasOwnProperty('detail')) {
+      if (errorJson.hasOwnProperty("detail")) {
         NotificationManager.error(errorJson.detail, "Error");
         return errorJson;
       }

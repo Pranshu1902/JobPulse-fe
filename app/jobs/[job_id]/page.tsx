@@ -317,7 +317,7 @@ export default function JobDetail() {
                 showCommentBox(comment)
               )
             ) : (
-              <div className="bg-lightgray p-3 rounded-lg flex justify-center">
+              <div className="bg-lightgray p-3 rounded-lg flex justify-center text-gray-500 font-semibold text-xl">
                 No Comments Found
               </div>
             )}
