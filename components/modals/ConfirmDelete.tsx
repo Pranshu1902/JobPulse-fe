@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWarning } from "@fortawesome/free-solid-svg-icons";
 import Button from "@components/Button";
 import FormLoader from "@components/FormLoader";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faWarning);
 
 interface ConfirmDeleteProps {
   title: string;

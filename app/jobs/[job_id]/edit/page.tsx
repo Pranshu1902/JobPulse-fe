@@ -3,6 +3,7 @@
 import { JobEditModel } from "@models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { TextField } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -13,6 +14,8 @@ import { COMMON_ERROR_NOTIFICATION_MESSAGE } from "@constants/constants";
 import { useAuth } from "@context/AuthContext";
 import FormLoader from "@components/FormLoader";
 import Loader from "@components/Loader";
+
+library.add(faChevronLeft);
 
 export default function EditJob() {
   const params = useParams();

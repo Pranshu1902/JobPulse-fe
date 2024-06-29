@@ -4,6 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faEllipsis, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { JobComment } from "@models/models";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faEdit, faEllipsis, faTrash);
 
 interface BasicCommentMenuProps {
   comment: JobComment;

@@ -13,6 +13,7 @@ import {
   faBarsProgress,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { useEffect, useState } from "react";
 import { request } from "@api/fetch";
 import { Job, JobComment } from "@models/models";
@@ -29,6 +30,18 @@ import BasicCommentMenu from "@components/BasicCommentMenu";
 import EditComment from "@components/modals/EditComment";
 import StatusLabel from "@components/StatusLabel";
 import FormLoader from "@components/FormLoader";
+
+library.add(
+  faChevronLeft,
+  faClock,
+  faGlobe,
+  faMoneyBill,
+  faExternalLink,
+  faTrash,
+  faEdit,
+  faEye,
+  faBarsProgress
+);
 
 export default function JobDetail() {
   const router = useRouter();

@@ -10,6 +10,9 @@ import Button from "@components/Button";
 import Loader from "@components/Loader";
 import { JOB_STATUSES } from "../constants/constants";
 import { useAuth } from "@context/AuthContext";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faArrowLeft, faArrowRight);
 
 export default function Jobs() {
   const [filteredJobList, setFilteredJobList] = useState<{

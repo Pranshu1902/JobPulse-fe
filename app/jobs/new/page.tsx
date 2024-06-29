@@ -11,6 +11,9 @@ import { request } from "@api/fetch";
 import { NotificationManager } from "react-notifications";
 import { useAuth } from "@context/AuthContext";
 import FormLoader from "@/components/FormLoader";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faChevronLeft);
 
 const initialJobData: JobCreateModel = {
   role: "",

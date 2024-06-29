@@ -6,6 +6,7 @@ import Dropdown from "@components/Dropdown";
 import { Job, JobStatus } from "@models/models";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
@@ -13,6 +14,8 @@ import { NotificationManager } from "react-notifications";
 import Button from "@components/Button";
 import { useAuth } from "@context/AuthContext";
 import FormLoader from "@components/FormLoader";
+
+library.add(faChevronLeft);
 
 const Loader = () => (
   <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 z-50">

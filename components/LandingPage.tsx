@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@context/AuthContext";
 import Loader from "@components/Loader";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faHeart);
 
 export default function LandingPage() {
   const { isLoading, isAuthenticated } = useAuth();

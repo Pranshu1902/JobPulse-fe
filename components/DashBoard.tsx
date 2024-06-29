@@ -11,6 +11,9 @@ import {
 import Link from "next/link";
 import Logo from "@components/Logo";
 import { useAuth } from "@context/AuthContext";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faHome, faSignOutAlt, faUser, faUserGraduate);
 
 export default function DashBoard({
   onLinkClick,

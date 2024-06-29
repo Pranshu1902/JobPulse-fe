@@ -12,6 +12,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
 import { StatusUpdate } from "@models/models";
 import tailwindConfig from "../tailwind.config";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faLocationCrosshairs);
 
 interface StatusTimelineProps {
   statuses: StatusUpdate[] | undefined;

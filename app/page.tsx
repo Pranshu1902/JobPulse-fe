@@ -11,10 +11,13 @@ import {
   faMoneyBill,
   faFilter,
 } from "@fortawesome/free-solid-svg-icons";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import Filter from "@components/Filter";
 import { JOB_STATUSES } from "@constants/constants";
 import Loader from "@components/Loader";
 import { useAuth } from "@context/AuthContext";
+
+library.add(faGlobe, faMoneyBill, faFilter);
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);

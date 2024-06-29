@@ -6,6 +6,9 @@ import Button from "@components/Button";
 import { TextField } from "@mui/material";
 import { useState } from "react";
 import FormLoader from "@components/FormLoader";
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faComment);
 
 interface EditCommentProps {
   initialComment: string;
