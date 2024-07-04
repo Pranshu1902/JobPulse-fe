@@ -26,6 +26,12 @@ export default function RootLayout({
       <CookiesProvider>
         <AuthProvider>
           <html lang="en">
+            <head>
+              <meta
+                name="google-site-verification"
+                content="JOyYtISfSw-gTeHkYEOFrvmnR4RU8vrW62VpBtxJ3j8"
+              />
+            </head>
             <body>
               <ResponsiveDashboard>
                 <Notification>{children}</Notification>
